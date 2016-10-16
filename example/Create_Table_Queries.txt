@@ -1,0 +1,153 @@
+create table USERS (
+id number(10) primary key,
+name varchar2(30) not null,
+email varchar2(30) unique not null,
+password varchar2(30) not null);
+
+
+create table patient (
+id number(10) unique,
+gender varchar2(2) not null,
+Address varchar2(60) not null,
+dob date not null);
+
+
+create table Health_Supporter (
+id number(10),
+Phone_number varchar2(10) unique not null);
+
+create table Well_Patient (
+PID number(10) unique,
+HSID1 number(10),
+HSID2 number(10));
+
+
+create table HS_Authorization (
+PID number(10),
+HSID number(10),
+unique (PID, HSID));
+commit;
+
+
+create table Sick_Patient (
+PID number(10) unique,
+HSID1 number(10) not null,
+HSID2 number(10));
+
+create table Disease_Type (
+ID number(10) primary key,
+Disease_Name varchar2(20) unique not null);
+
+CREATE SEQUENCE id_sequence START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER disease_id_trigger
+  BEFORE INSERT ON Disease_Type
+  FOR EACH ROW
+BEGIN
+  SELECT id_sequence.nextval
+  INTO :new.id
+  FROM dual;
+END;
+
+
+create table Diagnosis (
+ID number(10) primary key,
+PID number(10) not null,
+DID number(10) not null,
+Diagnosis_Date Timestamp not null);
+
+CREATE SEQUENCE diagnosis_id_sequence START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER diagnosis_id_trigger
+  BEFORE INSERT ON Diagnosis
+  FOR EACH ROW
+BEGIN
+  SELECT diagnosis_id_sequence.nextval
+  INTO :new.id
+  FROM dual;
+END;
+
+
+create table Observation_Type (
+ID number(10) primary key,
+Name varchar2(20) unique);
+
+CREATE SEQUENCE observation_type_id_sequence START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER observation_type_id_trigger
+  BEFORE INSERT ON Observation_Type
+  FOR EACH ROW
+BEGIN
+  SELECT observation_type_id_sequence.nextval
+  INTO :new.id
+  FROM dual;
+END;
+
+
+create table Nominal_Observation_Type (
+ID number(10) primary key,
+PID number(10),
+DID number(10),
+OID number(10),
+Upper_Limit number(10) not null,
+Lower_Limit number(10) not null,
+Frequency varchar2(20) not null,
+Value number(10) not null);
+
+CREATE SEQUENCE nom_obser_type_id_seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER nom_obser_type_id_trigger
+  BEFORE INSERT ON Nominal_Observation_Type
+  FOR EACH ROW
+BEGIN
+  SELECT nom_obser_type_id_seq.nextval
+  INTO :new.id
+  FROM dual;
+END;
+
+
+create table Ordinal_Observation_Type (
+ID number(10) primary key,
+PID number(10),
+DID number(10),
+OID number(10),
+Frequency varchar2(20) not null,
+Value varchar2(20) not null);
+
+CREATE SEQUENCE ord_obser_type_id_seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER ord_obser_type_id_trigger
+  BEFORE INSERT ON Ordinal_Observation_Type
+  FOR EACH ROW
+BEGIN
+  SELECT ord_obser_type_id_seq.nextval
+  INTO :new.id
+  FROM dual;
+END;
+
+
+create table Records_Nom_Obs_Type (
+NID number(10) primary key,
+UserID number(10),
+DID number(10),
+OID number(10),
+Readings number(10) not null,
+Recording_Timestamp Timestamp not null,
+Observation_Timestamp Timestamp not null);
+
+create table Records_Nom_Obs_Type (
+NID number(10) primary key,
+UserID number(10),
+DID number(10),
+OID number(10),
+Readings number(10) not null,
+Recording_Timestamp Timestamp not null,
+Observation_Timestamp Timestamp not null);
+
+
+
+
+
+
+
+
