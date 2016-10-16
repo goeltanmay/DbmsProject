@@ -4,7 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaapplication5;
+//package javaapplication5;
 import java.sql.*;
 /**
  *
@@ -20,7 +20,7 @@ import java.sql.*;
 //Note: If you run the program more than once, it will not be able to create the COFFEES table anew after the first run; 
 //	you can remove the COFFEES tables between the runs by typing "drop table COFFEES;" in SQL*Plus.
 
-public class firstExample {
+public class firstExample_2016 {
 
     static final String jdbcURL 
 	= "jdbc:oracle:thin:@orca.csc.ncsu.edu:1521:orcl01";
@@ -34,8 +34,8 @@ public class firstExample {
 
             Class.forName("oracle.jdbc.driver.OracleDriver");
 
-	    String user = "ibobra";	// For example, "jsmith"
-	    String passwd = "111111111";	// Your 9 digit student ID number
+	    String user = "tgoel";	// For example, "jsmith"
+	    String passwd = "200156717";	// Your 9 digit student ID number
 
 
             Connection conn = null;
