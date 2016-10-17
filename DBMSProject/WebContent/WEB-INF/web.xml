@@ -17,5 +17,7 @@
 	<servlet-name>loginOne</servlet-name>
 	<url-pattern>/mylogin</url-pattern>
    </servlet-mapping>
-
+	<listener>
+	   <listener-class>init.InitListener</listener-class>
+	</listener>
 </web-app>
