@@ -53,7 +53,7 @@ public class loginOne implements Servlet {
 	newUser.password = p;
 	try {
 		newUser.save();
-	} catch (NullPointerException | SQLException e1) {
+	} catch (NullPointerException | SQLException | IllegalArgumentException | IllegalAccessException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	}

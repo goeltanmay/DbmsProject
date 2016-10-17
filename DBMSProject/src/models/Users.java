@@ -7,7 +7,6 @@ public class Users extends BaseModel {
 	public String name;
 	public String email;
 	public String password;
-	public DiseaseType diseaseType;
 
 	@Override
 	public boolean delete() {

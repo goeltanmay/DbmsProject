@@ -12,7 +12,7 @@ public abstract class BaseModel {
 
 	private long id;
 	
-	public BaseModel save() throws NullPointerException, SQLException{
+	public BaseModel save() throws NullPointerException, SQLException, IllegalArgumentException, IllegalAccessException{
 		if (this.id == 0) return this.create();
 		else return this.update();
 	}
@@ -23,15 +23,11 @@ public abstract class BaseModel {
 	
 	public abstract boolean delete();
 	
-	public String getForeignName(){
-		return this.getClass().getSimpleName() + "_id";
-	}
-	
 	public BaseModel update(){
 		return this;
 	}
 	
-	public BaseModel create() throws NullPointerException, SQLException{
+	public BaseModel create() throws NullPointerException, SQLException, IllegalArgumentException, IllegalAccessException{
 		// get name of the class whose object has been saved
 		String insertStatement = makeInsertStatement();
 		// execute the statement
@@ -45,7 +41,7 @@ public abstract class BaseModel {
 		return this;
 	}
 
-	private String makeInsertStatement() {
+	private String makeInsertStatement() throws IllegalArgumentException, IllegalAccessException {
 		String nameOfClass = this.getClass().getSimpleName();
 		
 		// make the insert statement stub.
@@ -62,22 +58,14 @@ public abstract class BaseModel {
 			if(BaseModel.class.isAssignableFrom(f.getType())){
 				// detecting foreign keys
 				fieldsString += f.getName() + ",";
-				try {
-					valuesString += ((BaseModel)f.get(this)).id + ",";
-				} catch (IllegalArgumentException | IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				valuesString += ((BaseModel)f.get(this)).id + ",";
 				continue;
 			}
 			fieldsString += f.getName() + ",";
 			String valueString="";
-			try {
-				valueString = f.get(this).toString();
-			} catch (IllegalArgumentException | IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			valueString = f.get(this).toString();
+			
 			if(f.getType() == String.class){
 				valueString = "'" + valueString + "'";
 			}
