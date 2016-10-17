@@ -23,10 +23,69 @@ public abstract class BaseModel {
 	
 	public abstract boolean delete();
 	
-	public BaseModel update(){
+	public BaseModel update() throws SQLException, IllegalArgumentException, IllegalAccessException
+	{
+		
+		String updateStatement=makeUpdateStatement();
+		
+		// execute the statement
+		PreparedStatement psmt = ConnectionManager.getDbConnection().prepareStatement(updateStatement);
+		psmt.executeUpdate();
+		
 		return this;
 	}
 	
+	private String makeUpdateStatement() throws IllegalArgumentException, IllegalAccessException 
+	{
+		// TODO Auto-generated method stub
+		//Fetching the type of object to be updated
+        String nameOfClass = this.getClass().getSimpleName();
+        
+		// make the insert statement stub.
+		String updateStatement = String.format("Update %s set ", nameOfClass);
+		
+		// figure out all the fields and their type
+		Field[] fields = this.getClass().getFields();
+	
+		String valueString="";
+		
+		for (Field f : fields)
+		{
+			valueString="";
+			
+			if(BaseModel.class.isAssignableFrom(f.getType()))
+			{
+				// detecting foreign keys
+				updateStatement += f.getName() + "=";
+				updateStatement += ((BaseModel)f.get(this)).id + ",";
+				continue;
+			}
+			
+			updateStatement += f.getName() + "=";
+			
+			valueString = f.get(this).toString();
+			
+			if(f.getType() == String.class){
+				valueString = "'" + valueString + "'";
+			}
+			valueString +=",";
+			
+			updateStatement += valueString;
+		}
+		
+		System.out.println("the final update statement is:"+updateStatement);
+		
+		if (updateStatement.endsWith(",")) {
+		    updateStatement = updateStatement.substring(0, updateStatement.length() - 1);
+		}
+		
+		updateStatement+=" where id="+this.id; 
+        
+		System.out.println("the final update statement is:"+updateStatement);
+		//returns the final update query
+		return updateStatement;
+	}
+
 	public BaseModel create() throws NullPointerException, SQLException, IllegalArgumentException, IllegalAccessException{
 		// get name of the class whose object has been saved
 		String insertStatement = makeInsertStatement();
@@ -89,4 +148,14 @@ public abstract class BaseModel {
 		insertStatement += fieldsString + " values "+ valuesString;
 		return insertStatement;
 	}
+	
+	public ResultSet select(String statement) throws SQLException
+	{
+		//creating statement object
+		Statement stmt = ConnectionManager.getDbConnection().createStatement();
+		
+		//Executing query and getting result set in rs
+		return stmt.executeQuery(statement);
+	}
+	
 }
