@@ -60,8 +60,14 @@ public abstract class BaseModel {
 		// add the values string at the end of the method to the insert statement.		
 		for (Field f : fields){
 			if(BaseModel.class.isAssignableFrom(f.getType())){
-				System.out.println(" FOREIGN KEY DETECTED");
 				// detecting foreign keys
+				fieldsString += f.getName() + ",";
+				try {
+					valuesString += ((BaseModel)f.get(this)).id + ",";
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				continue;
 			}
 			fieldsString += f.getName() + ",";
