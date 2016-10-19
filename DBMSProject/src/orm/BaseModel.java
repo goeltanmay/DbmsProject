@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 //import com.sun.java.util.jar.pack.Package.Class.Field;
 
@@ -149,13 +152,44 @@ public abstract class BaseModel {
 		return insertStatement;
 	}
 	
-	public ResultSet select(String statement) throws SQLException
-	{
-		//creating statement object
-		Statement stmt = ConnectionManager.getDbConnection().createStatement();
-		
-		//Executing query and getting result set in rs
-		return stmt.executeQuery(statement);
+	public ResultSet select(String statement) throws SQLException {
+		return ConnectionManager.getDbConnection().createStatement().executeQuery(statement);
+	}
+	
+	public ArrayList<JsonObject> select(Class clss) {
+		String queryString = "select * from %s where %s";
+		ResultSet resultSet = null;
+		try {
+			resultSet = ConnectionManager.getDbConnection().createStatement().executeQuery(queryString);
+		} catch (NullPointerException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			return parseResult(clss, resultSet);
+			 
+		} catch (SQLException | InstantiationException | IllegalAccessException e ) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	private ArrayList<JsonObject> parseResult(Class clss, ResultSet resultSet) throws SQLException, InstantiationException, IllegalAccessException {
+		ArrayList<JsonObject> arrayList = new ArrayList<JsonObject>();
+		while(!resultSet.isAfterLast()){
+			JsonObject jsonObject = new JsonObject();
+			resultSet.next();
+			for (Field f : clss.getFields()){
+				if(f.getType() == long.class) jsonObject.addProperty(f.getName(), resultSet.getLong(f.getName()));
+				else if(f.getType() == int.class) jsonObject.addProperty(f.getName(), resultSet.getInt(f.getName()));
+				else if(f.getType() == String.class) jsonObject.addProperty(f.getName(), resultSet.getString(f.getName()));
+				else if(f.getType() == double.class) jsonObject.addProperty(f.getName(), resultSet.getDouble(f.getName()));
+				else if(f.getType() == float.class) jsonObject.addProperty(f.getName(), resultSet.getFloat(f.getName()));
+			}
+			arrayList.add(jsonObject);
+		}
+		return arrayList;
 	}
 	
 }
