@@ -10,12 +10,44 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-  	<servlet-name>loginOne</servlet-name>
-	<servlet-class>loginOne</servlet-class>
+  	<servlet-name>loginPatient</servlet-name>
+	<servlet-class>controller.LoginPatient</servlet-class>
    </servlet>
    <servlet-mapping>
-	<servlet-name>loginOne</servlet-name>
-	<url-pattern>/mylogin</url-pattern>
+	<servlet-name>loginPatient</servlet-name>
+	<url-pattern>/loginPatient</url-pattern>
+   </servlet-mapping>
+   <servlet>
+  	<servlet-name>profile</servlet-name>
+	<servlet-class>controller.Profile</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>profile</servlet-name>
+	<url-pattern>/profile</url-pattern>
+   </servlet-mapping>
+    <servlet>
+  	<servlet-name>profileUpdate</servlet-name>
+	<servlet-class>controller.ProfileUpdate</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>profileUpdate</servlet-name>
+	<url-pattern>/profileUpdate</url-pattern>
+   </servlet-mapping>
+   <servlet>
+  	<servlet-name>loginHS</servlet-name>
+	<servlet-class>controller.LoginHS</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>loginHS</servlet-name>
+	<url-pattern>/loginHS</url-pattern>
+   </servlet-mapping>
+   <servlet>
+  	<servlet-name>successSignUp</servlet-name>
+	<servlet-class>controller.SignUp</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>successSignUp</servlet-name>
+	<url-pattern>/successSignUp</url-pattern>
    </servlet-mapping>
 	<listener>
 	   <listener-class>init.InitListener</listener-class>
