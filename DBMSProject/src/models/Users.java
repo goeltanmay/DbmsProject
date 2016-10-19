@@ -14,10 +14,6 @@ public class Users extends BaseModel {
 		return false;
 	}
 
-	@Override
-	public BaseModel update() {
-		// TODO Auto-generated method stub
-		return this;
-	}
+	
 
 }
