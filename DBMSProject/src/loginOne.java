@@ -4,12 +4,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+
+import org.apache.catalina.User;
 
 import models.Users;
 
@@ -53,8 +56,19 @@ public class loginOne implements Servlet {
 	newUser.password = p;
 	try {
 		newUser.save();
-		newUser.name="Test";
-		newUser.save();
+		ArrayList<Users> arrayList = new ArrayList<Users>();
+		for (Object f : newUser.select()){
+			arrayList.add((Users) f);
+		}
+		
+		for(Users u:arrayList)
+		{
+			System.out.println("The object is:");
+			System.out.println(u.email);
+			System.out.println(u.name);
+			System.out.println(u.password);
+		}
+		
 	} catch (NullPointerException | SQLException | IllegalArgumentException | IllegalAccessException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();

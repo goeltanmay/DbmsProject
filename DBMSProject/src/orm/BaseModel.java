@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -24,7 +25,18 @@ public abstract class BaseModel {
 		return this.id;
 	}
 	
-	public abstract boolean delete();
+	public boolean delete() throws NullPointerException, SQLException
+	{
+		if(this.id != 0)
+		{
+			String deleteQuery=String.format("delete from %s where id=%d",this.getClass().getSimpleName(),this.id);
+			ConnectionManager.getDbConnection().createStatement().executeQuery(deleteQuery);
+			return true;
+			
+		}
+		
+		return false;
+	}
 	
 	public BaseModel update() throws SQLException, IllegalArgumentException, IllegalAccessException
 	{
@@ -156,9 +168,13 @@ public abstract class BaseModel {
 		return ConnectionManager.getDbConnection().createStatement().executeQuery(statement);
 	}
 	
-	public ArrayList<JsonObject> select(Class clss) {
-		String queryString = "select * from %s where %s";
+	public ArrayList<Object> select() {
+		Class clss = this.getClass();
+		String queryString = String.format("select * from %s",clss.getSimpleName());
 		ResultSet resultSet = null;
+		ArrayList<JsonObject> jsonArrayList = new ArrayList<JsonObject>();
+		ArrayList<Object> objectArrayList= new ArrayList<Object>();
+		
 		try {
 			resultSet = ConnectionManager.getDbConnection().createStatement().executeQuery(queryString);
 		} catch (NullPointerException | SQLException e1) {
@@ -166,21 +182,32 @@ public abstract class BaseModel {
 			e1.printStackTrace();
 		}
 		try {
-			return parseResult(clss, resultSet);
+			 jsonArrayList=parseResult(clss, resultSet);
 			 
 		} catch (SQLException | InstantiationException | IllegalAccessException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
+		
+		
+		Gson gson = new Gson();
+
+		
+		for(JsonObject obj:jsonArrayList)
+		{
+			objectArrayList.add(gson.fromJson(obj,clss));
+		}
+		
+		return objectArrayList;
 	}
 	
 	private ArrayList<JsonObject> parseResult(Class clss, ResultSet resultSet) throws SQLException, InstantiationException, IllegalAccessException {
 		ArrayList<JsonObject> arrayList = new ArrayList<JsonObject>();
-		while(!resultSet.isAfterLast()){
+		while(resultSet.next()){
 			JsonObject jsonObject = new JsonObject();
-			resultSet.next();
-			for (Field f : clss.getFields()){
+			for (Field f : clss.getFields())
+			{
 				if(f.getType() == long.class) jsonObject.addProperty(f.getName(), resultSet.getLong(f.getName()));
 				else if(f.getType() == int.class) jsonObject.addProperty(f.getName(), resultSet.getInt(f.getName()));
 				else if(f.getType() == String.class) jsonObject.addProperty(f.getName(), resultSet.getString(f.getName()));
