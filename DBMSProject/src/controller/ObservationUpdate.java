@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class Profile extends HttpServlet {
+public class ObservationUpdate extends HttpServlet {
 	/**
 	 * 
 	 */
@@ -20,18 +20,16 @@ public class Profile extends HttpServlet {
 	public String gender;
 	public String address;
 	public String dob;
-	public String patientCategory;
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res)
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-
-		req.setAttribute("name", "Aditya Pandey");
-		req.setAttribute("email", "apandey6333");
-		req.setAttribute("dob", "2015-08-08");//Set date like 2015-08-08
-		req.setAttribute("gender", "o");
-		req.setAttribute("address", "1520 Lilley");
-		req.setAttribute("patientCategory", "Well Patient");
-		req.getRequestDispatcher("profile.jsp").forward(req, res);
+		String alertThreshold;
+		String[] observName = req.getParameterValues("observName");
+		for (int i = 0; i < observName.length; i++) {
+			alertThreshold = req.getParameter("alertThreshold_" + observName[i]);
+		}
+		
+		res.sendRedirect("successHealthIndicator.jsp");
     }
 
 	
@@ -83,14 +81,6 @@ public class Profile extends HttpServlet {
 		this.dob = dob;
 	}
 	
-	public String getPatientCategory() {
-		return patientCategory;
-	}
-
-	public void setPatientCategory(String patientCategory) {
-		this.patientCategory = patientCategory;
-	}
-
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub

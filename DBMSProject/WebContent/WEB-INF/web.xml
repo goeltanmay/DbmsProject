@@ -25,9 +25,57 @@
 	<servlet-name>profile</servlet-name>
 	<url-pattern>/profile</url-pattern>
    </servlet-mapping>
-    <servlet>
+   <servlet>
+  	<servlet-name>diagnoses</servlet-name>
+	<servlet-class>controller.Diagnoses</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>diagnoses</servlet-name>
+	<url-pattern>/diagnoses</url-pattern>
+   </servlet-mapping>
+   <servlet>
+  	<servlet-name>diagnosesAdd</servlet-name>
+	<servlet-class>controller.DiagnosesAdd</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>diagnosesAdd</servlet-name>
+	<url-pattern>/diagnosesAdd</url-pattern>
+   </servlet-mapping>
+   <servlet>
+  	<servlet-name>diagnosesRemove</servlet-name>
+	<servlet-class>controller.DiagnosesRemove</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>diagnosesRemove</servlet-name>
+	<url-pattern>/diagnosesRemove</url-pattern>
+   </servlet-mapping>
+   <servlet>
   	<servlet-name>profileUpdate</servlet-name>
 	<servlet-class>controller.ProfileUpdate</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>healthInd</servlet-name>
+	<url-pattern>/healthInd</url-pattern>
+   </servlet-mapping>
+   <servlet>
+  	<servlet-name>healthInd</servlet-name>
+	<servlet-class>controller.HealthIndicator</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>updateObservations</servlet-name>
+	<url-pattern>/updateObservations</url-pattern>
+   </servlet-mapping>
+   <servlet>
+  	<servlet-name>updateObservations</servlet-name>
+	<servlet-class>controller.ObservationUpdate</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>addRecords</servlet-name>
+	<url-pattern>/addRecords</url-pattern>
+   </servlet-mapping>
+   <servlet>
+  	<servlet-name>addRecords</servlet-name>
+	<servlet-class>controller.AddRecords</servlet-class>
    </servlet>
    <servlet-mapping>
 	<servlet-name>profileUpdate</servlet-name>
