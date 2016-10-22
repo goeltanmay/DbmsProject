@@ -1,12 +1,16 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import models.Users;
 
 
 public class SignUp extends HttpServlet {
@@ -14,85 +18,40 @@ public class SignUp extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public String name;
-	public String email;
-	public String password;
-	public String gender;
-	public String address;
-	public String dob;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		System.out.println("we are in gooood handssssssssssss");
-		setEmail(req.getParameter("name"));
-		setEmail(req.getParameter("email"));
-		setPassword(req.getParameter("password"));
-		setGender(req.getParameter("gender"));
-		setAddress(req.getParameter("address"));
-		setDob(req.getParameter("dob"));//2013-2-25
 		
-		boolean success = true;//Call db to check if account already exists
-		if (success) {
-			res.sendRedirect("successSignUp.jsp");
-		} else {
-			res.sendRedirect("successSignUp.jsp");
+		Users user=new Users();
+		
+		user.name=req.getParameter("name");
+		user.email=req.getParameter("email");
+		user.password=req.getParameter("password");
+		user.gender=req.getParameter("gender");
+		user.address=req.getParameter("address");
+		user.dob=req.getParameter("dob");//2013-2-25
+		
+		RequestDispatcher rd;
+		
+		try {
+			user.save();
+			rd=req.getRequestDispatcher("successSignUp.jsp");
+			rd.forward(req, res);
+			
+			
+		} catch (NullPointerException | IllegalArgumentException
+				| IllegalAccessException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			rd=req.getRequestDispatcher("signUpError.jsp");
+			rd.forward(req, res);
 		}
+		
+	
     }
 
 	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getDob() {
-		return dob;
-	}
-
-	public void setDob(String dob) {
-		this.dob = dob;
-	}
-
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	@Override
 	public ServletConfig getServletConfig() {

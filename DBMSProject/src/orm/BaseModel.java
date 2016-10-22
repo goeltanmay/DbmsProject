@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 //import com.sun.java.util.jar.pack.Package.Class.Field;
 
@@ -21,7 +25,18 @@ public abstract class BaseModel {
 		return this.id;
 	}
 	
-	public abstract boolean delete();
+	public boolean delete() throws NullPointerException, SQLException
+	{
+		if(this.id != 0)
+		{
+			String deleteQuery=String.format("delete from %s where id=%d",this.getClass().getSimpleName(),this.id);
+			ConnectionManager.getDbConnection().createStatement().executeQuery(deleteQuery);
+			return true;
+			
+		}
+		
+		return false;
+	}
 	
 	public BaseModel update() throws SQLException, IllegalArgumentException, IllegalAccessException
 	{
@@ -149,13 +164,60 @@ public abstract class BaseModel {
 		return insertStatement;
 	}
 	
-	public ResultSet select(String statement) throws SQLException
-	{
-		//creating statement object
-		Statement stmt = ConnectionManager.getDbConnection().createStatement();
+	public static ResultSet selectRaw(String statement) throws SQLException {
+		return ConnectionManager.getDbConnection().createStatement().executeQuery(statement);
+	}
+	
+	public static ArrayList<Object> select(Class clss, String where) {
+		String queryString = String.format("select * from %s",clss.getSimpleName());
+		if(!where.equalsIgnoreCase("")) queryString += " where "+ where ;
+		ResultSet resultSet = null;
+		ArrayList<JsonObject> jsonArrayList = new ArrayList<JsonObject>();
+		ArrayList<Object> objectArrayList= new ArrayList<Object>();
 		
-		//Executing query and getting result set in rs
-		return stmt.executeQuery(statement);
+		try {
+			resultSet = ConnectionManager.getDbConnection().createStatement().executeQuery(queryString);
+		} catch (NullPointerException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			 jsonArrayList = parseResult(clss, resultSet);
+			 
+		} catch (SQLException | InstantiationException | IllegalAccessException e ) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+		Gson gson = new Gson();
+
+		
+		for(JsonObject obj:jsonArrayList)
+		{
+			objectArrayList.add(gson.fromJson(obj,clss));
+		}
+		
+		return objectArrayList;
+	}
+	
+	private static ArrayList<JsonObject> parseResult(Class clss, ResultSet resultSet) throws SQLException, InstantiationException, IllegalAccessException {
+		ArrayList<JsonObject> arrayList = new ArrayList<JsonObject>();
+		if(resultSet != null)
+			while(resultSet.next()){
+				JsonObject jsonObject = new JsonObject();
+				for (Field f : clss.getFields())
+				{
+					if(f.getType() == long.class) jsonObject.addProperty(f.getName(), resultSet.getLong(f.getName()));
+					else if(f.getType() == int.class) jsonObject.addProperty(f.getName(), resultSet.getInt(f.getName()));
+					else if(f.getType() == String.class) jsonObject.addProperty(f.getName(), resultSet.getString(f.getName()));
+					else if(f.getType() == double.class) jsonObject.addProperty(f.getName(), resultSet.getDouble(f.getName()));
+					else if(f.getType() == float.class) jsonObject.addProperty(f.getName(), resultSet.getFloat(f.getName()));
+				}
+				arrayList.add(jsonObject);
+			}
+		return arrayList;
 	}
 	
 }

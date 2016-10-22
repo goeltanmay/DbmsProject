@@ -1,27 +1,47 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import models.Users;
+import orm.BaseModel;
 
 
-public class LoginPatient implements Servlet {
+public class LoginPatient extends HttpServlet {
 	public String email;
 	public String password;
 	
 	@Override
-	public void service(ServletRequest req, ServletResponse res)
-			throws ServletException, IOException 
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException 
 	{
 		setEmail(req.getParameter("emailPatient"));
 		setPassword(req.getParameter("passwordPatient"));
 		//String e=req.getParameter("email");
 		//String p=req.getParameter("password");
-
+        String where = "email ='" + getEmail() + "' and password = '" + getPassword()+"'";
+		ArrayList<Object> userList = BaseModel.select(Users.class, where);
+		RequestDispatcher requestDispatcher;
+		if(userList.size() > 0){
+			// user is logged in
+			requestDispatcher=req.getRequestDispatcher("/home.jsp");
+			requestDispatcher.forward(req,res);
+		}
+		else{
+			// return to login page with error message.
+			requestDispatcher=req.getRequestDispatcher("/loginFailure.jsp");
+			requestDispatcher.forward(req,res); 
+		}
+		
     }
 
 	

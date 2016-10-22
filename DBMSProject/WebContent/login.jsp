@@ -11,7 +11,7 @@
 			<div style="float:left; width:50%;">
 			    <font size=7 color="red"> Login as patient: </font>
 				<br>
-			    <form method=GET action=loginPatient>
+			    <form method=POST action=loginPatient>
 			        <font size=5> Email <br> <input type=text name="emailPatient" size=20><br>
 			        </font>
 			        <font size=5> Password <br><input type=text name="passwordPatient" size=20>
