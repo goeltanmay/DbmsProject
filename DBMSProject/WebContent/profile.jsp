@@ -38,5 +38,5 @@
 		   </table> 
            
         </form>
-		<a href="login.jsp"> Go Back To Login Page</a>
+		<a href="home.jsp"> Go Back To Home Page</a>
 </html>
