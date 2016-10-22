@@ -4,6 +4,17 @@ name varchar2(30) not null,
 email varchar2(30) unique not null,
 password varchar2(30) not null);
 
+CREATE SEQUENCE users_id_sequence START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER users_id_trigger
+  BEFORE INSERT ON USERS
+  FOR EACH ROW
+BEGIN
+  SELECT users_id_sequence.nextval
+  INTO :new.id
+  FROM dual;
+END;
+
 
 create table patient (
 id number(10) unique,
