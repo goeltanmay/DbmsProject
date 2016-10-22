@@ -164,13 +164,13 @@ public abstract class BaseModel {
 		return insertStatement;
 	}
 	
-	public ResultSet select(String statement) throws SQLException {
+	public static ResultSet selectRaw(String statement) throws SQLException {
 		return ConnectionManager.getDbConnection().createStatement().executeQuery(statement);
 	}
 	
-	public ArrayList<Object> select() {
-		Class clss = this.getClass();
+	public static ArrayList<Object> select(Class clss, String where) {
 		String queryString = String.format("select * from %s",clss.getSimpleName());
+		if(!where.equalsIgnoreCase("")) queryString += " where "+ where ;
 		ResultSet resultSet = null;
 		ArrayList<JsonObject> jsonArrayList = new ArrayList<JsonObject>();
 		ArrayList<Object> objectArrayList= new ArrayList<Object>();
@@ -182,7 +182,7 @@ public abstract class BaseModel {
 			e1.printStackTrace();
 		}
 		try {
-			 jsonArrayList=parseResult(clss, resultSet);
+			 jsonArrayList = parseResult(clss, resultSet);
 			 
 		} catch (SQLException | InstantiationException | IllegalAccessException e ) {
 			// TODO Auto-generated catch block
@@ -202,20 +202,21 @@ public abstract class BaseModel {
 		return objectArrayList;
 	}
 	
-	private ArrayList<JsonObject> parseResult(Class clss, ResultSet resultSet) throws SQLException, InstantiationException, IllegalAccessException {
+	private static ArrayList<JsonObject> parseResult(Class clss, ResultSet resultSet) throws SQLException, InstantiationException, IllegalAccessException {
 		ArrayList<JsonObject> arrayList = new ArrayList<JsonObject>();
-		while(resultSet.next()){
-			JsonObject jsonObject = new JsonObject();
-			for (Field f : clss.getFields())
-			{
-				if(f.getType() == long.class) jsonObject.addProperty(f.getName(), resultSet.getLong(f.getName()));
-				else if(f.getType() == int.class) jsonObject.addProperty(f.getName(), resultSet.getInt(f.getName()));
-				else if(f.getType() == String.class) jsonObject.addProperty(f.getName(), resultSet.getString(f.getName()));
-				else if(f.getType() == double.class) jsonObject.addProperty(f.getName(), resultSet.getDouble(f.getName()));
-				else if(f.getType() == float.class) jsonObject.addProperty(f.getName(), resultSet.getFloat(f.getName()));
+		if(resultSet != null)
+			while(resultSet.next()){
+				JsonObject jsonObject = new JsonObject();
+				for (Field f : clss.getFields())
+				{
+					if(f.getType() == long.class) jsonObject.addProperty(f.getName(), resultSet.getLong(f.getName()));
+					else if(f.getType() == int.class) jsonObject.addProperty(f.getName(), resultSet.getInt(f.getName()));
+					else if(f.getType() == String.class) jsonObject.addProperty(f.getName(), resultSet.getString(f.getName()));
+					else if(f.getType() == double.class) jsonObject.addProperty(f.getName(), resultSet.getDouble(f.getName()));
+					else if(f.getType() == float.class) jsonObject.addProperty(f.getName(), resultSet.getFloat(f.getName()));
+				}
+				arrayList.add(jsonObject);
 			}
-			arrayList.add(jsonObject);
-		}
 		return arrayList;
 	}
 	
