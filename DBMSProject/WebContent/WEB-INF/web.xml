@@ -98,12 +98,12 @@
 	<url-pattern>/loginHS</url-pattern>
    </servlet-mapping>
    <servlet>
-  	<servlet-name>successSignUp</servlet-name>
+  	<servlet-name>signUp</servlet-name>
 	<servlet-class>controller.SignUp</servlet-class>
    </servlet>
    <servlet-mapping>
-	<servlet-name>successSignUp</servlet-name>
-	<url-pattern>/successSignUp</url-pattern>
+	<servlet-name>signUp</servlet-name>
+	<url-pattern>/signUp</url-pattern>
    </servlet-mapping>
 	<listener>
 	   <listener-class>init.InitListener</listener-class>
