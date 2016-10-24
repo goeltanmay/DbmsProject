@@ -23,7 +23,7 @@
 			    	OR<br>
 			    	Don't have account SignUp<br>
 			    </font>
-			    	<button onclick="window.location='signUp.jsp';">Sign Up</button>
+			    	<button onclick="window.location='signUpUser.jsp';">Sign Up</button>
 			</div>
 			<!--div style="float:left; width:50%;">
 				<font size=7 color="red"> Login as health supporter: </font>
