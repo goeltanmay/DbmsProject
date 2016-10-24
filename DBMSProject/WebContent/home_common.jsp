@@ -9,18 +9,24 @@
 </head>
 <body>
 <div> 
-
-Link to patient dashboard / signup
+	<c:choose>
+	    <c:when test="${is_patient}">
+		   <a href="/loginPatient"> GO TO PATIENT PROFILE</a>
+	    </c:when>
+	    <c:otherwise>
+	    	<a href="/patientSignup.jsp"> SIGN UP AS PATIENT </a>
+	    </c:otherwise>
+	</c:choose>
 </div>
 <div> 
-<c:choose>
-    <c:when test="${is_hs}">
-	   <a href="/healthSupp.jsp"> GO TO HEALTH SUPPORTER PROFILE</a>
-    </c:when>
-    <c:otherwise>
-    	<a href="/healthSuppSignup.jsp"> SIGN UP AS HEALTH SUPPORTER </a>
-    </c:otherwise>
-</c:choose>
+	<c:choose>
+	    <c:when test="${is_hs}">
+		   <a href="/healthSupp.jsp"> GO TO HEALTH SUPPORTER PROFILE</a>
+	    </c:when>
+	    <c:otherwise>
+	    	<a href="/healthSuppSignup.jsp"> SIGN UP AS HEALTH SUPPORTER </a>
+	    </c:otherwise>
+	</c:choose>
 </div>
 </body>
 </html>
