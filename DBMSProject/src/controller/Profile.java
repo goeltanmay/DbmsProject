@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import models.Users;
 import orm.BaseModel;
@@ -67,9 +66,6 @@ public class Profile extends HttpServlet {
 			 Users user=(Users)u;
 			 req.setAttribute("name",user.name);
 			 req.setAttribute("email",user.email);
-			 req.setAttribute("dob",user.dob);//Set date like 2015-08-08
-			 req.setAttribute("gender",user.gender);
-			 req.setAttribute("address",user.address);
 			 req.setAttribute("patientCategory",category);
 			 req.getRequestDispatcher("profile.jsp").forward(req, res);
 			}

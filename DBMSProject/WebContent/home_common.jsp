@@ -24,7 +24,7 @@
 		   <a href="/healthSupp.jsp"> GO TO HEALTH SUPPORTER PROFILE</a>
 	    </c:when>
 	    <c:otherwise>
-	    	<a href="/healthSuppSignup.jsp"> SIGN UP AS HEALTH SUPPORTER </a>
+	    	<a href="hSSignUp.jsp"> SIGN UP AS HEALTH SUPPORTER </a>
 	    </c:otherwise>
 	</c:choose>
 </div>

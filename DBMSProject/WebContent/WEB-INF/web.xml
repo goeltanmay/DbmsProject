@@ -105,6 +105,14 @@
 	<servlet-name>signUp</servlet-name>
 	<url-pattern>/signUp</url-pattern>
    </servlet-mapping>
+    <servlet>
+  	<servlet-name>hSSignUp</servlet-name>
+	<servlet-class>controller.HSSignup</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>hSSignUp</servlet-name>
+	<url-pattern>/hSSignUp</url-pattern>
+   </servlet-mapping>
 	<listener>
 	   <listener-class>init.InitListener</listener-class>
 	</listener>
