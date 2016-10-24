@@ -1,12 +1,20 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import models.Users;
+import orm.BaseModel;
 
 
 public class Profile extends HttpServlet {
@@ -23,15 +31,48 @@ public class Profile extends HttpServlet {
 	public String patientCategory;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
-			throws ServletException, IOException {
-
-		req.setAttribute("name", "Aditya Pandey");
-		req.setAttribute("email", "apandey6333");
-		req.setAttribute("dob", "2015-08-08");//Set date like 2015-08-08
-		req.setAttribute("gender", "o");
-		req.setAttribute("address", "1520 Lilley");
-		req.setAttribute("patientCategory", "Well Patient");
-		req.getRequestDispatcher("profile.jsp").forward(req, res);
+			throws ServletException, IOException 
+	{
+			String email=(String) req.getSession().getAttribute("email");
+			String category="well";
+			String where = "email ='" + email +"'";
+			
+			System.out.println("Email is:"+email);
+			
+			//System.out.println("Email is:"+email);
+			
+			ResultSet rs=null;
+			
+			try 
+			{
+				rs= BaseModel.selectRaw("select PID from Diagnosis where pid=(select id from users where "+where+")");
+				while(rs.next())
+				{
+					category="sick";
+				}
+			} 
+			catch (SQLException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+			ArrayList<Object> userList = BaseModel.select(Users.class, where);
+			RequestDispatcher requestDispatcher;
+			
+			for(Object u:userList)
+			{
+			 Users user=(Users)u;
+			 req.setAttribute("name",user.name);
+			 req.setAttribute("email",user.email);
+			 req.setAttribute("dob",user.dob);//Set date like 2015-08-08
+			 req.setAttribute("gender",user.gender);
+			 req.setAttribute("address",user.address);
+			 req.setAttribute("patientCategory",category);
+			 req.getRequestDispatcher("profile.jsp").forward(req, res);
+			}
     }
 
 	
