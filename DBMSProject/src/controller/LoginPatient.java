@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import models.Users;
 import orm.BaseModel;
@@ -33,6 +34,8 @@ public class LoginPatient extends HttpServlet {
 		RequestDispatcher requestDispatcher;
 		if(userList.size() > 0){
 			// user is logged in
+			HttpSession session = req.getSession();
+			session.setAttribute("user_id", ((Users)userList.get(0)).id);
 			requestDispatcher=req.getRequestDispatcher("/home.jsp");
 			requestDispatcher.forward(req,res);
 		}

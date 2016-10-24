@@ -13,6 +13,14 @@
   	<servlet-name>loginPatient</servlet-name>
 	<servlet-class>controller.LoginPatient</servlet-class>
    </servlet>
+   <servlet>
+  	<servlet-name>loginCommon</servlet-name>
+	<servlet-class>controller.LoginCommon</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>loginCommon</servlet-name>
+	<url-pattern>/loginCommon</url-pattern>
+   </servlet-mapping>
    <servlet-mapping>
 	<servlet-name>loginPatient</servlet-name>
 	<url-pattern>/loginPatient</url-pattern>

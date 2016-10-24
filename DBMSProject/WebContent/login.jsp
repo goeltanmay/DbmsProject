@@ -11,10 +11,10 @@
 			<div style="float:left; width:50%;">
 			    <font size=7 color="red"> Login as patient: </font>
 				<br>
-			    <form method=POST action=loginPatient>
-			        <font size=5> Email <br> <input type=text name="emailPatient" size=20><br>
+			    <form method=POST action=loginCommon>
+			        <font size=5> Email <br> <input type=text name="email" size=20><br>
 			        </font>
-			        <font size=5> Password <br><input type=text name="passwordPatient" size=20>
+			        <font size=5> Password <br><input type=text name="password" size=20>
 			        </font>
 			        <br><br>
 			        <input type=submit value="Submit"><br>
@@ -25,10 +25,10 @@
 			    </font>
 			    	<button onclick="window.location='signUp.jsp';">Sign Up</button>
 			</div>
-			<div style="float:left; width:50%;">
+			<!--div style="float:left; width:50%;">
 				<font size=7 color="red"> Login as health supporter: </font>
 				<br>
-			    <form method=GET action=loginHS>
+			    <form method=POST action=loginHS>
 			        <font size=5> Email <br><input type=text name="emailHS" size=20><br>
 			        </font>
 			        <font size=5> Password <br><input type=text name="passwordHS" size=20>
@@ -36,7 +36,7 @@
 			        <br><br>
 			        <input type=submit value="Submit">
 			    </form>
-			</div>
+			</div-->
 		</div>
 	</body>
 </html>
