@@ -14,7 +14,7 @@ import com.google.gson.JsonObject;
 
 public abstract class BaseModel {
 
-	long id;
+	public long id;
 	
 	public BaseModel save() throws NullPointerException, SQLException, IllegalArgumentException, IllegalAccessException{
 		if (this.id == 0) return this.create();
