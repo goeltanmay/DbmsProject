@@ -28,9 +28,9 @@ public class SignUp extends HttpServlet {
 		user.name=req.getParameter("name");
 		user.email=req.getParameter("email");
 		user.password=req.getParameter("password");
-		user.gender=req.getParameter("gender");
-		user.address=req.getParameter("address");
-		user.dob=req.getParameter("dob");//2013-2-25
+//		user.gender=req.getParameter("gender");
+//		user.address=req.getParameter("address");
+//		user.dob=req.getParameter("dob");//2013-2-25
 		
 		RequestDispatcher rd;
 		
