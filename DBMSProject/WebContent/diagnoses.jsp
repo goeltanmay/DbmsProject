@@ -4,7 +4,7 @@
 <html>
 	<head>
 	    <title> Diagnoses page </title>
-		<script>
+		<!--script>
 			function setValue(){
 				var diagnoses = ${existDiag};
 				var i;
@@ -23,7 +23,7 @@
 				document.getElementById("remainingDiag").innerHTML = textRemain;
 			}
 			window.onload = setValue;
-		</script>	
+		</script-->	
 	</head>
 	<body>
 	 <form method="post" action="diagnosesRemove">
