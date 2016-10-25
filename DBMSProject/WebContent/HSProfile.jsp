@@ -12,10 +12,10 @@
 <br>
 
 <table>
-<form method=POST action="updateHSprofile" >
+<form method=POST action="update_hs_profile" >
     <tr>
         <td>UID:</td>
-        <td><input type="text" name="ID" value="${user.id}" disabled></td>
+        <td><input type="text" name="id" value="${user.id}" disabled></td>
     </tr>
     <tr>
         <td>Name:</td>
@@ -31,7 +31,7 @@
     </tr>
     <tr>
         <td>Contact Info:</td>
-        <td><input type="text" name="number" value="${hs.phone_number}"></td>
+        <td><input type="text" name="phone_number" value="${hs.phone_number}"></td>
     </tr>
     <tr>
         <td colspan="2" align="center"><input type="submit" name="save" value="Save"></td>
