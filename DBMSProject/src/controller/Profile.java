@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Patient;
 import models.Users;
 import orm.BaseModel;
 
@@ -29,14 +30,14 @@ public class Profile extends HttpServlet {
 	public String dob;
 	public String patientCategory;
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res)
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException 
 	{
-			String email=(String) req.getSession().getAttribute("email");
+			long pid=(long) req.getSession().getAttribute("patient_id");
 			String category="well";
-			String where = "email ='" + email +"'";
+			String where = "id=" + pid;
+			String wherePatient = "user_id=" + pid;
 			
-			System.out.println("Email is:"+email);
 			
 			//System.out.println("Email is:"+email);
 			
@@ -44,31 +45,48 @@ public class Profile extends HttpServlet {
 			
 			try 
 			{
-				rs= BaseModel.selectRaw("select PID from Diagnosis where pid=(select id from users where "+where+")");
+				
+				ArrayList<Object> userList = BaseModel.select(Users.class, where);
+				
+				for(Object o:userList)
+				{
+				 Users u=(Users)o;
+				 req.setAttribute("name",u.name);
+				 req.setAttribute("email",u.email);
+				}
+				
+				rs= BaseModel.selectRaw("select PID from Diagnosis where pid=(select id from patient where "+where+")");
 				while(rs.next())
 				{
 					category="sick";
 				}
+				
+				
+				
+				ArrayList<Object> patientList = BaseModel.select(Patient.class, wherePatient);
+				
+				for(Object o:patientList)
+				{
+				 Patient p=(Patient)o;
+				 req.setAttribute("dob",p.dob);
+				 req.setAttribute("address",p.address);
+				 req.setAttribute("gender",p.gender);
+				 req.setAttribute("patientCategory",category);
+				}
+				
+				 req.getRequestDispatcher("profile.jsp").forward(req, res);
+				
 			} 
 			catch (SQLException e) 
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				//req.getRequestDispatcher("").forward(req,res);
 			}
 			
 			
 			
-			ArrayList<Object> userList = BaseModel.select(Users.class, where);
-			RequestDispatcher requestDispatcher;
 			
-			for(Object u:userList)
-			{
-			 Users user=(Users)u;
-			 req.setAttribute("name",user.name);
-			 req.setAttribute("email",user.email);
-			 req.setAttribute("patientCategory",category);
-			 req.getRequestDispatcher("profile.jsp").forward(req, res);
-			}
     }
 
 	

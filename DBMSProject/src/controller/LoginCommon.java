@@ -35,6 +35,7 @@ public class LoginCommon extends HttpServlet {
 			HttpSession session = req.getSession();
 			session.setAttribute("user_id", ((Users)userList.get(0)).id);
 			
+			
 			String where2 = "user_id = " + String.valueOf(((Users)userList.get(0)).getId());
 			ArrayList<Object> supporters = Health_Supporter.select(Health_Supporter.class, where2);
 			if(supporters!= null && supporters.size()>0){
@@ -47,6 +48,8 @@ public class LoginCommon extends HttpServlet {
 			ArrayList<Object> patients = Patient.select(Patient.class, where2);
 			if(patients.size()>0){
 				req.setAttribute("is_patient", true);
+				session.setAttribute("patient_id", ((Users)userList.get(0)).id);
+				session.setAttribute("patient_password",req.getParameter("password"));
 			}
 			else{
 				req.setAttribute("is_patient", false);

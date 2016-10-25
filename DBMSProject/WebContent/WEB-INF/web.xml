@@ -57,10 +57,6 @@
     <servlet-name>diagnosesRemove</servlet-name>
     <url-pattern>/diagnosesRemove</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>profileUpdate</servlet-name>
-    <servlet-class>controller.ProfileUpdate</servlet-class>
-  </servlet>
   <servlet-mapping>
     <servlet-name>healthInd</servlet-name>
     <url-pattern>/healthInd</url-pattern>
@@ -84,6 +80,10 @@
   <servlet>
     <servlet-name>addRecords</servlet-name>
     <servlet-class>controller.AddRecords</servlet-class>
+  </servlet>
+   <servlet>
+    <servlet-name>profileUpdate</servlet-name>
+    <servlet-class>controller.ProfileUpdate</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>profileUpdate</servlet-name>
