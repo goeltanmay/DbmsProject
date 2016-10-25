@@ -124,6 +124,14 @@
 	<servlet-name>hSSignUp</servlet-name>
 	<url-pattern>/hSSignUp</url-pattern>
    </servlet-mapping>
+   <servlet>
+  	<servlet-name>logOut</servlet-name>
+	<servlet-class>controller.LogOut</servlet-class>
+   </servlet>
+   <servlet-mapping>
+   <servlet-name>logOut</servlet-name>
+	<url-pattern>/logOut</url-pattern>
+   </servlet-mapping>
 	<listener>
 	   <listener-class>init.InitListener</listener-class>
 	</listener>
