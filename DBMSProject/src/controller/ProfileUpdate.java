@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Patient;
 import models.Users;
 import orm.BaseModel;
 
@@ -29,32 +32,91 @@ public class ProfileUpdate extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		String email=(String) req.getSession().getAttribute("email");
-		String where = "email ='" + email +"'";
+		long pid=(long) req.getSession().getAttribute("patient_id");
+		long uid=(long) req.getSession().getAttribute("user_id");
+		String password=(String)req.getSession().getAttribute("patient_password");
 		
-		ArrayList<Object> userList = BaseModel.select(Users.class, where);
-		RequestDispatcher requestDispatcher;
+
+		ResultSet rs=null;
 		
+		String category="well";
+		String where = "id=" + pid;
+		String wherePatient = "user_id=" + pid;
 		
-		for(Object u:userList)
-		{
-		 Users user=(Users)u;
-			
-		 
-		 /*req.setAttribute("name",user.name);
-		 req.setAttribute("email",user.email);
-		 req.setAttribute("dob",user.dob);//Set date like 2015-08-08
-		 req.setAttribute("gender",user.gender);
-		 req.setAttribute("address",user.address);
-		 req.setAttribute("patientCategory",category);
-		 req.getRequestDispatcher("profile.jsp").forward(req, res);*/
+		Users user=new Users();
+		user.id=pid;
+		user.email=req.getParameter("email");
+		user.name=req.getParameter("name");
+		user.password=password;
+		
+		try {
+			user.save();
+		} catch (NullPointerException | IllegalArgumentException
+				| IllegalAccessException | SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
 		
-		boolean success = true;//Call db to check if account already exists
-		if (success) {
-			res.sendRedirect("successProfileUpdate.jsp");
-		} else {
-			res.sendRedirect("failureProfileUpdate.jsp");
+//		Patient patient=new Patient();
+		
+		ArrayList<Object> pList=BaseModel.select(Patient.class, wherePatient);
+		
+		Patient patient = (Patient)pList.get(0);
+//		patient.user_id = user;
+		patient.address=req.getParameter("address");
+		patient.gender=req.getParameter("gender");
+		patient.dob=req.getParameter("dob");
+		patient.user_id = user;
+		
+		try {
+			patient.save();
+		} catch (NullPointerException | IllegalArgumentException
+				| IllegalAccessException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
+		try 
+		{
+			
+			ArrayList<Object> userList = BaseModel.select(Users.class, where);
+			
+			for(Object o:userList)
+			{
+			 Users u=(Users)o;
+			 req.setAttribute("name",u.name);
+			 req.setAttribute("email",u.email);
+			}
+			
+			rs= BaseModel.selectRaw("select PID from Diagnosis where pid=(select id from patient where "+where+")");
+			while(rs.next())
+			{
+				category="sick";
+			}
+			
+			
+			
+			ArrayList<Object> patientList = BaseModel.select(Patient.class, wherePatient);
+			
+			for(Object o:patientList)
+			{
+			 Patient p=(Patient)o;
+			 req.setAttribute("dob",p.dob);
+			 req.setAttribute("address",p.address);
+			 req.setAttribute("gender",p.gender);
+			 req.setAttribute("patientCategory",category);
+			}
+			
+			 req.getRequestDispatcher("profile.jsp").forward(req, res);
+			
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			//req.getRequestDispatcher("").forward(req,res);
 		}
     }
 

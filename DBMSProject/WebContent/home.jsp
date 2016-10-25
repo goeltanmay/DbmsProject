@@ -9,13 +9,13 @@
 	<body bgcolor="white">
 	 <center>
 		<font size=7 color="red"> Welcome Choose your option </font><br>
-	    <form method=get action=profile>
+	    <form method=post action=profile>
 	    	<font size=5><input type="submit" action="PatientEditProfile" value="View or Edit Profile"/> </font>
 	    </form><br>
-	    <form method=get action=diagnoses>
+	    <form method=post action=diagnoses>
 	    	<font size=5><input type="submit" value="View or Edit Diagnoses"/> </font>
 	    </form><br>
-	    <form method=get action=healthInd>
+	    <form method=post action=healthInd>
 	    	<font size=5><input type="submit" value="View and Add Health Observations"/> </font>
 	    </form><br>
 		<form method="post" action="logOut">

@@ -56,6 +56,7 @@ public abstract class BaseModel {
 		//Fetching the type of object to be updated
         String nameOfClass = this.getClass().getSimpleName();
         
+        System.out.println(nameOfClass);
 		// make the insert statement stub.
 		String updateStatement = String.format("Update %s set ", nameOfClass);
 		
@@ -86,6 +87,7 @@ public abstract class BaseModel {
 			valueString +=",";
 			
 			updateStatement += valueString;
+			System.out.println(updateStatement);
 		}
 		
 		System.out.println("the final update statement is:"+updateStatement);
