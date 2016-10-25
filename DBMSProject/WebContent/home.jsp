@@ -10,7 +10,7 @@
 	 <center>
 		<font size=7 color="red"> Welcome Choose your option </font><br>
 	    <form method=get action=profile>
-	    	<font size=5><input type="submit" value="View or Edit Profile"/> </font>
+	    	<font size=5><input type="submit" action="PatientEditProfile" value="View or Edit Profile"/> </font>
 	    </form><br>
 	    <form method=get action=diagnoses>
 	    	<font size=5><input type="submit" value="View or Edit Diagnoses"/> </font>

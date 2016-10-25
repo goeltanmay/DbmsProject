@@ -9,7 +9,7 @@
 	<body bgcolor="white">
 		<div style="width:100%;"> <!-- Main Div -->
 			<div style="float:left; width:50%;">
-			    <font size=7 color="red"> Login as patient: </font>
+			    <font size=7 color="red"> Login: </font>
 				<br>
 			    <form method=POST action=loginCommon>
 			        <font size=5> Email <br> <input type=text name="email" size=20><br>

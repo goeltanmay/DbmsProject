@@ -36,7 +36,7 @@ public class LoginCommon extends HttpServlet {
 			
 			String where2 = "user_id = " + String.valueOf(((Users)userList.get(0)).getId());
 			ArrayList<Object> supporters = Health_Supporter.select(Health_Supporter.class, where2);
-			if(supporters.size()>0){
+			if(supporters!= null && supporters.size()>0){
 				req.setAttribute("is_hs", true);
 			}
 			else{

@@ -11,10 +11,10 @@
 <div> 
 	<c:choose>
 	    <c:when test="${is_patient}">
-		   <a href="/loginPatient"> GO TO PATIENT PROFILE</a>
+		   <a href="home.jsp"> GO TO PATIENT PROFILE</a>
 	    </c:when>
 	    <c:otherwise>
-	    	<a href="/patientSignup.jsp"> SIGN UP AS PATIENT </a>
+	    	<a href="patientSignUp.jsp"> SIGN UP AS PATIENT </a>
 	    </c:otherwise>
 	</c:choose>
 </div>

@@ -1,12 +1,17 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import models.Users;
+import orm.BaseModel;
 
 
 public class ProfileUpdate extends HttpServlet {
@@ -24,12 +29,26 @@ public class ProfileUpdate extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		setName(req.getParameter("name"));
-		setEmail(req.getParameter("email"));
-		setPassword(req.getParameter("password"));
-		setGender(req.getParameter("gender"));
-		setAddress(req.getParameter("address"));
-		setDob(req.getParameter("dob"));//2013-2-25
+		String email=(String) req.getSession().getAttribute("email");
+		String where = "email ='" + email +"'";
+		
+		ArrayList<Object> userList = BaseModel.select(Users.class, where);
+		RequestDispatcher requestDispatcher;
+		
+		
+		for(Object u:userList)
+		{
+		 Users user=(Users)u;
+			
+		 
+		 /*req.setAttribute("name",user.name);
+		 req.setAttribute("email",user.email);
+		 req.setAttribute("dob",user.dob);//Set date like 2015-08-08
+		 req.setAttribute("gender",user.gender);
+		 req.setAttribute("address",user.address);
+		 req.setAttribute("patientCategory",category);
+		 req.getRequestDispatcher("profile.jsp").forward(req, res);*/
+		}
 		
 		boolean success = true;//Call db to check if account already exists
 		if (success) {
