@@ -8,7 +8,7 @@
 	
 	<body bgcolor="white">
 		<center>
-		 <form method="post" action="successSignUp">
+		 <form method="post" action="signUp">
            <table>
 			<thead>
 				<tr> <th><font size=7 color=red>SignUp Here</font> </th></tr>

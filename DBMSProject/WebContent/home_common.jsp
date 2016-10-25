@@ -11,17 +11,17 @@
 <div> 
 	<c:choose>
 	    <c:when test="${is_patient}">
-		   <a href="/loginPatient"> GO TO PATIENT PROFILE</a>
+		   <a href="loginPatient"> GO TO PATIENT PROFILE</a>
 	    </c:when>
 	    <c:otherwise>
-	    	<a href="/patientSignup.jsp"> SIGN UP AS PATIENT </a>
+	    	<a href="patientSignup.jsp"> SIGN UP AS PATIENT </a>
 	    </c:otherwise>
 	</c:choose>
 </div>
 <div> 
 	<c:choose>
 	    <c:when test="${is_hs}">
-		   <a href="/healthSupp.jsp"> GO TO HEALTH SUPPORTER PROFILE</a>
+		   <a href="healthSupp.jsp"> GO TO HEALTH SUPPORTER PROFILE</a>
 	    </c:when>
 	    <c:otherwise>
 	    	<a href="hSSignUp.jsp"> SIGN UP AS HEALTH SUPPORTER </a>

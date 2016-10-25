@@ -32,8 +32,9 @@ public class HSSignup extends HttpServlet {
 			hs.user_id = new Users();
 			HttpSession session = req.getSession();
 			hs.user_id.id = (long) session.getAttribute("user_id");
-			hs.phone_number = Integer.parseInt(req.getParameter("contact"));
+			hs.phone_number = req.getParameter("contact");
 			hs.save();
+			req.getRequestDispatcher("successSignUp.jsp").forward(req, res);
 			
 		} catch (NullPointerException | IllegalArgumentException
 				| IllegalAccessException | SQLException e) {

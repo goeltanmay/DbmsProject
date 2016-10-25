@@ -14,7 +14,7 @@
 				<tr> <th><font size=7 color=red>Health Supporter SignUp Here</font> </th></tr>
 			</thead>
 			<tbody>
-				 <tr><td> <font size=5> Update your contact number<br> <input type=text name="contactNo" size=20/><br>
+				 <tr><td> <font size=5> Update your contact number<br> <input type=text name="contact" size=20/><br>
 				        </font></td></tr>
 				   <tr><td><font size=5> <input type=submit value="Submit">
 				        </font></td></tr>
