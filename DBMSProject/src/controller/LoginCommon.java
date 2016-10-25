@@ -47,6 +47,7 @@ public class LoginCommon extends HttpServlet {
 			ArrayList<Object> patients = Patient.select(Patient.class, where2);
 			if(patients.size()>0){
 				req.setAttribute("is_patient", true);
+				
 			}
 			else{
 				req.setAttribute("is_patient", false);

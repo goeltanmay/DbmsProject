@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <title> Edit Profile </title>
@@ -9,30 +12,26 @@
 <br>
 
 <table>
-<form method=POST action=>
+<form method=POST action="updateHSprofile" >
     <tr>
         <td>UID:</td>
-        <td><input type="text" name="ID" value="ID here" disabled></td>
+        <td><input type="text" name="ID" value="${user.id}" disabled></td>
     </tr>
     <tr>
         <td>Name:</td>
-        <td><input type="text" name="name" value="Name here"></td>
+        <td><input type="text" name="name" value="${user.name}"></td>
     </tr>
     <tr>
         <td>Email:</td>
-        <td><input type="text" name="email" value="Email here"></td>
+        <td><input type="text" name="email" value="${user.email}"></td>
     </tr>
     <tr>
         <td>Password:</td>
-        <td><input type="password" name="password" value="Password here"></td>
+        <td><input type="password" name="password" value="${user.password}"></td>
     </tr>
     <tr>
         <td>Contact Info:</td>
-        <td><input type="text" name="number" value="Phone here"></td>
-    </tr>
-    <tr>
-        <td>Autorization Date:</td>
-        <td><input type="date" name="authDate"></td>
+        <td><input type="text" name="number" value="${hs.phone_number}"></td>
     </tr>
     <tr>
         <td colspan="2" align="center"><input type="submit" name="save" value="Save"></td>
