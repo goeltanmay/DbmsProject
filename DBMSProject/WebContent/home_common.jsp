@@ -28,5 +28,11 @@
 	    </c:otherwise>
 	</c:choose>
 </div>
+<div>
+	<br>
+	<form method="post" action="logOut">
+		<input type=submit value="Log Out">
+    </form>
+</div>
 </body>
 </html>

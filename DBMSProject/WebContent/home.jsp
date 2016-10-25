@@ -18,6 +18,9 @@
 	    <form method=get action=healthInd>
 	    	<font size=5><input type="submit" value="View and Add Health Observations"/> </font>
 	    </form><br>
+		<form method="post" action="logOut">
+			<input type=submit value="Log Out">
+		</form><br>
 	  </center>
 	</body>
 </html>
