@@ -4,17 +4,21 @@ name varchar2(30) not null,
 email varchar2(30) unique not null,
 password varchar2(30) not null);
 
-CREATE SEQUENCE users_id_sequence START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE users_id_seq START WITH 1 INCREMENT BY 1;
 
-CREATE OR REPLACE TRIGGER users_id_trigger
+CREATE OR REPLACE TRIGGER users_id_trig
   BEFORE INSERT ON USERS
   FOR EACH ROW
 BEGIN
-  SELECT users_id_sequence.nextval
+  SELECT users_id_seq.nextval
   INTO :new.id
   FROM dual;
 END;
 
+DROP TRIGGER users_id_trigger; 
+DROP sequence users_id_sequence;
+
+##############################################################################################
 
 create table patient (
 id number(10) unique,
@@ -22,16 +26,62 @@ gender varchar2(2) not null,
 Address varchar2(60) not null,
 dob date not null);
 
+CREATE SEQUENCE patient_id_seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER patient_id_trig
+  BEFORE INSERT ON patient
+  FOR EACH ROW
+BEGIN
+  SELECT patient_id_seq.nextval
+  INTO :new.id
+  FROM dual;
+END;
+
+DROP TRIGGER patient_id_trigger; 
+DROP sequence patient_id_sequence;
+
+##############################################################################################
 
 create table Health_Supporter (
 id number(10),
 Phone_number varchar2(10) unique not null);
+
+CREATE SEQUENCE H_S_id_seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER H_S_id_trig
+  BEFORE INSERT ON Health_Supporter
+  FOR EACH ROW
+BEGIN
+  SELECT H_S_id_seq.nextval
+  INTO :new.id
+  FROM dual;
+END;
+
+DROP TRIGGER H_S_id_trigger; 
+DROP sequence H_S_id_sequence;
+
+##############################################################################################
 
 create table Well_Patient (
 PID number(10) unique,
 HSID1 number(10),
 HSID2 number(10));
 
+CREATE SEQUENCE well_pat_id_seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER well_pat_id_trig
+  BEFORE INSERT ON well_patient
+  FOR EACH ROW
+BEGIN
+  SELECT well_patient_id_seq.nextval
+  INTO :new.pid
+  FROM dual;
+END;
+
+DROP TRIGGER well_patient_id_trig; 
+DROP sequence well_patient_id_seq;
+
+##############################################################################################
 
 create table HS_Authorization (
 PID number(10),
@@ -39,27 +89,56 @@ HSID number(10),
 unique (PID, HSID));
 commit;
 
+CREATE SEQUENCE H_S_Auth_id_seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER H_S_Auth_id_trig
+  BEFORE INSERT ON HS_Authorization
+  FOR EACH ROW
+BEGIN
+  SELECT H_S_Auth_id_seq.nextval
+  INTO :new.pid
+  FROM dual;
+END;
+
+##############################################################################################
 
 create table Sick_Patient (
 PID number(10) unique,
 HSID1 number(10) not null,
 HSID2 number(10));
 
+CREATE SEQUENCE Sick_Pat_Id_Seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER Sick_Pat_Id_Trig
+  BEFORE INSERT ON Sick_Patient
+  FOR EACH ROW
+BEGIN
+  SELECT Sick_Pat_Id_Seq.nextval
+  INTO :new.pid
+  FROM dual;
+END;
+
+##############################################################################################
+
 create table Disease_Type (
 ID number(10) primary key,
 Disease_Name varchar2(20) unique not null);
 
-CREATE SEQUENCE id_sequence START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE disease_id_seq START WITH 1 INCREMENT BY 1;
 
-CREATE OR REPLACE TRIGGER disease_id_trigger
+CREATE OR REPLACE TRIGGER disease_id_trig
   BEFORE INSERT ON Disease_Type
   FOR EACH ROW
 BEGIN
-  SELECT id_sequence.nextval
+  SELECT disease_id_seq.nextval
   INTO :new.id
   FROM dual;
 END;
 
+DROP TRIGGER disease_id_trigger; 
+DROP sequence id_sequence;
+
+##############################################################################################
 
 create table Diagnosis (
 ID number(10) primary key,
@@ -67,33 +146,41 @@ PID number(10) not null,
 DID number(10) not null,
 Diagnosis_Date Timestamp not null);
 
-CREATE SEQUENCE diagnosis_id_sequence START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE diagnosis_id_seq START WITH 1 INCREMENT BY 1;
 
-CREATE OR REPLACE TRIGGER diagnosis_id_trigger
+CREATE OR REPLACE TRIGGER diagnosis_id_trig
   BEFORE INSERT ON Diagnosis
   FOR EACH ROW
 BEGIN
-  SELECT diagnosis_id_sequence.nextval
+  SELECT diagnosis_id_seq.nextval
   INTO :new.id
   FROM dual;
 END;
 
+DROP TRIGGER diagnosis_id_trigger; 
+DROP sequence diagnosis_id_sequence;
+
+##############################################################################################
 
 create table Observation_Type (
 ID number(10) primary key,
 Name varchar2(20) unique);
 
-CREATE SEQUENCE observation_type_id_sequence START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE Obs_Type_Id_Seq START WITH 1 INCREMENT BY 1;
 
-CREATE OR REPLACE TRIGGER observation_type_id_trigger
+CREATE OR REPLACE TRIGGER Obs_Type_Id_Trig
   BEFORE INSERT ON Observation_Type
   FOR EACH ROW
 BEGIN
-  SELECT observation_type_id_sequence.nextval
+  SELECT Obs_Type_Id_Seq.nextval
   INTO :new.id
   FROM dual;
 END;
 
+DROP TRIGGER Obs_Type_Id_Trigger; 
+DROP sequence Obs_Type_Id_Sequence;
+
+##############################################################################################
 
 create table Nominal_Observation_Type (
 ID number(10) primary key,
@@ -105,17 +192,21 @@ Lower_Limit number(10) not null,
 Frequency varchar2(20) not null,
 Value number(10) not null);
 
-CREATE SEQUENCE nom_obser_type_id_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE Nom_Obs_Id_Seq START WITH 1 INCREMENT BY 1;
 
-CREATE OR REPLACE TRIGGER nom_obser_type_id_trigger
+CREATE OR REPLACE TRIGGER nom_obs_id_trig
   BEFORE INSERT ON Nominal_Observation_Type
   FOR EACH ROW
 BEGIN
-  SELECT nom_obser_type_id_seq.nextval
+  SELECT Nom_Obs_Id_Seq.nextval
   INTO :new.id
   FROM dual;
 END;
 
+DROP TRIGGER nom_obs_id_trigger; 
+DROP sequence nom_obser_type_id_seq;
+
+##############################################################################################
 
 create table Ordinal_Observation_Type (
 ID number(10) primary key,
@@ -125,17 +216,20 @@ OID number(10),
 Frequency varchar2(20) not null,
 Value varchar2(20) not null);
 
-CREATE SEQUENCE ord_obser_type_id_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE ord_obs_id_seq START WITH 1 INCREMENT BY 1;
 
-CREATE OR REPLACE TRIGGER ord_obser_type_id_trigger
+CREATE OR REPLACE TRIGGER ord_obs_id_trig
   BEFORE INSERT ON Ordinal_Observation_Type
   FOR EACH ROW
 BEGIN
-  SELECT ord_obser_type_id_seq.nextval
+  SELECT ord_obs_id_seq.nextval
   INTO :new.id
   FROM dual;
 END;
 
+DROP TRIGGER ord_obs_id_trigger; 
+DROP sequence ord_obser_type_id_seq;
+##############################################################################################
 
 create table Records_Nom_Obs_Type (
 NID number(10) primary key,
@@ -146,8 +240,21 @@ Readings number(10) not null,
 Recording_Timestamp Timestamp not null,
 Observation_Timestamp Timestamp not null);
 
-create table Records_Nom_Obs_Type (
-NID number(10) primary key,
+CREATE SEQUENCE Rec_Nom_Id_Seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER Rec_Nom_Id_Trig
+  BEFORE INSERT ON Records_Nom_Obs_Type
+  FOR EACH ROW
+BEGIN
+  SELECT Rec_Nom_Id_Seq.nextval
+  INTO :new.ID
+  FROM dual;
+END;
+
+##############################################################################################
+
+create table Records_Ord_Obs_Type (
+ID number(10) primary key,
 UserID number(10),
 DID number(10),
 OID number(10),
@@ -155,10 +262,19 @@ Readings number(10) not null,
 Recording_Timestamp Timestamp not null,
 Observation_Timestamp Timestamp not null);
 
+CREATE SEQUENCE Rec_Ord_Id_Seq START WITH 1 INCREMENT BY 1;
 
+CREATE OR REPLACE TRIGGER Rec_Ord_Id_Trig
+  BEFORE INSERT ON Records_Ord_Obs_Type
+  FOR EACH ROW
+BEGIN
+  SELECT Rec_Ord_Id_Seq.nextval
+  INTO :new.ID
+  FROM dual;
+END;
 
+##############################################################################################
 
+Dropping a trigger
 
-
-
-
+DROP TRIGGER hr.salary_check; 
