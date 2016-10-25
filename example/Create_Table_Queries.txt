@@ -1,7 +1,7 @@
 create table USERS (
 id number(10) primary key,
 name varchar2(30) not null,
-email varchar2(30) unique not null,
+email varchar2(40) unique not null,
 password varchar2(30) not null);
 
 CREATE SEQUENCE users_id_seq START WITH 1 INCREMENT BY 1;
@@ -63,6 +63,7 @@ DROP sequence H_S_id_sequence;
 ##############################################################################################
 
 create table Well_Patient (
+id number(10) primary key,
 PID number(10) unique,
 HSID1 number(10),
 HSID2 number(10));
@@ -73,20 +74,24 @@ CREATE OR REPLACE TRIGGER well_pat_id_trig
   BEFORE INSERT ON well_patient
   FOR EACH ROW
 BEGIN
-  SELECT well_patient_id_seq.nextval
-  INTO :new.pid
+  SELECT well_pat_id_seq.nextval
+  INTO :new.id
   FROM dual;
 END;
 
-DROP TRIGGER well_patient_id_trig; 
-DROP sequence well_patient_id_seq;
+Alter table Well_Patient add id number(10) primary key;
+
+DROP TRIGGER well_pat_id_trig; 
+DROP sequence well_pat_id_seq;
 
 ##############################################################################################
 
 create table HS_Authorization (
+id number(10) primary key,
 PID number(10),
 HSID number(10),
-unique (PID, HSID));
+unique (PID, HSID),
+auth_date date not null);
 commit;
 
 CREATE SEQUENCE H_S_Auth_id_seq START WITH 1 INCREMENT BY 1;
@@ -96,13 +101,16 @@ CREATE OR REPLACE TRIGGER H_S_Auth_id_trig
   FOR EACH ROW
 BEGIN
   SELECT H_S_Auth_id_seq.nextval
-  INTO :new.pid
+  INTO :new.id
   FROM dual;
 END;
 
+DROP TRIGGER H_S_Auth_id_trig; 
+DROP sequence H_S_Auth_id_seq;
 ##############################################################################################
 
 create table Sick_Patient (
+id number(10) primary key,
 PID number(10) unique,
 HSID1 number(10) not null,
 HSID2 number(10));
@@ -114,10 +122,14 @@ CREATE OR REPLACE TRIGGER Sick_Pat_Id_Trig
   FOR EACH ROW
 BEGIN
   SELECT Sick_Pat_Id_Seq.nextval
-  INTO :new.pid
+  INTO :new.id
   FROM dual;
 END;
 
+Alter table Sick_Patient add id number(10) primary key;
+
+DROP TRIGGER Sick_Pat_Id_Trig; 
+DROP sequence Sick_Pat_Id_Seq;
 ##############################################################################################
 
 create table Disease_Type (

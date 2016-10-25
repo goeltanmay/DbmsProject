@@ -1,0 +1,55 @@
+########################################################################################################
+Users
+INSERT INTO USERS (name, email, password) VALUES ('Sheldon Cooper', 'scooper@ncsu.edu', 'password');
+INSERT INTO USERS (name, email, password) VALUES ('Leonard Hofstader', 'lhofstader@ncsu.edu', 'password');
+INSERT INTO USERS (name, email, password) VALUES ('Penny Hofstader', 'phofstader@ncsu.edu', 'password');
+INSERT INTO USERS (name, email, password) VALUES ('Amy Farrahfowler', 'afarrahfowler@ncsu.edu', 'password');
+
+########################################################################################################
+Patient
+INSERT INTO patient(gender, address, dob, user_id) VALUES ('m', '2500 Sacramento, Apt 903, Santa Cruz, CA - 90021', '26-May-1984', 1);
+INSERT INTO patient(gender, address, dob, user_id) VALUES ('m', '2500 Sacramento, Apt 904, Santa Cruz, CA - 90021', '19-Apr-1989', 2);
+INSERT INTO patient(gender, address, dob, user_id) VALUES ('f', '2500 Sacramento, Apt 904, Santa Cruz, CA - 90021', '25-Dec-1990', 3);
+INSERT INTO patient(gender, address, dob, user_id) VALUES ('f', '2500 Sacramento, Apt 905, Santa Cruz, CA - 90021', '15-Jun-1992', 4);
+
+########################################################################################################
+Sick_Patient
+INSERT INTO sick_patient(pid, hsid1, hsid2) VALUES (1, 2, 4);
+INSERT INTO sick_patient(pid, hsid1) VALUES (2, 3);
+
+########################################################################################################
+Well_Patient
+
+INSERT INTO well_patient(pid, hsid1) VALUES (3, 4);
+
+########################################################################################################
+HS_Authorization
+
+INSERT INTO hs_authorization(pid, hsid, auth_date) VALUES (1, 2, '21-Oct-2016');
+INSERT INTO hs_authorization(pid, hsid, auth_date) VALUES (1, 4, '21-Oct-2016');
+INSERT INTO hs_authorization(pid, hsid, auth_date) VALUES (2, 3, '09-Oct-2016');
+INSERT INTO hs_authorization(pid, hsid, auth_date) VALUES (3, 4, '21-Oct-2016');
+
+########################################################################################################
+Disease_type
+INSERT INTO disease_type(disease_name) VALUES ('Heart Disease');
+INSERT INTO disease_type(disease_name) VALUES ('HIV');
+
+########################################################################################################
+Diagnosis
+INSERT INTO diagnosis(pid, did, diagnosis_date) VALUES (1, 1, '22-Oct-2016');
+INSERT INTO diagnosis(pid, did, diagnosis_date) VALUES (2, 2, '10-Oct-2016');
+
+########################################################################################################
+Health_Supporter
+INSERT INTO Health_Supporter(phone_number, user_id) VALUES ('9876543210', 2);
+INSERT INTO Health_Supporter(phone_number, user_id) VALUES ('9856565656', 3);
+INSERT INTO Health_Supporter(phone_number, user_id) VALUES ('9855555555', 4);
+
+########################################################################################################
+
+
+
+########################################################################################################
+Alter table users drop column (gender, address, dob);
+Alter table HS_Authorization add auth_date date not null;
