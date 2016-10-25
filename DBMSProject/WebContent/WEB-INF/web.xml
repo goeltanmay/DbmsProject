@@ -132,6 +132,14 @@
    <servlet-name>logOut</servlet-name>
 	<url-pattern>/logOut</url-pattern>
    </servlet-mapping>
+   <servlet>
+  	<servlet-name>edit_hs_profile</servlet-name>
+	<servlet-class>controller.EditHSProfile</servlet-class>
+   </servlet>
+   <servlet-mapping>
+   <servlet-name>edit_hs_profile</servlet-name>
+	<url-pattern>/edit_hs_profile</url-pattern>
+   </servlet-mapping>
 	<listener>
 	   <listener-class>init.InitListener</listener-class>
 	</listener>

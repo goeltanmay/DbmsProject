@@ -1,7 +1,8 @@
 package models;
 
-public class HS_Authorization 
-{
-	long pid;
-	long hsid;
+import orm.BaseModel;
+
+public class HS_Authorization extends BaseModel {
+	public Patient pid;
+	public Health_Supporter hsid; 
 }

@@ -50,6 +50,7 @@ public class LoginCommon extends HttpServlet {
 				req.setAttribute("is_patient", true);
 				session.setAttribute("patient_id", ((Users)userList.get(0)).id);
 				session.setAttribute("patient_password",req.getParameter("password"));
+
 			}
 			else{
 				req.setAttribute("is_patient", false);
