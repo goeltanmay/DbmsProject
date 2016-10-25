@@ -24,6 +24,7 @@ public class ListHSPatients extends HttpServlet {
 	hs.user_id.id = user_id;
 	// get the patient list
 	// render the patient list.
+	// once this list is rendered, use the patient_id attribute to display the patient dashboard.
 	
 	}
 	
