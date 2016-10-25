@@ -98,14 +98,6 @@
     <url-pattern>/loginHS</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>successSignUp</servlet-name>
-    <servlet-class>controller.SignUp</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>successSignUp</servlet-name>
-    <url-pattern>/successSignUp</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>PatientSignUp</servlet-name>
     <servlet-class>controller.PatientSignUp</servlet-class>
   </servlet>
@@ -116,4 +108,23 @@
   <listener>
     <listener-class>init.InitListener</listener-class>
   </listener>
+   <servlet>
+  	<servlet-name>signUp</servlet-name>
+	<servlet-class>controller.SignUp</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>signUp</servlet-name>
+	<url-pattern>/signUp</url-pattern>
+   </servlet-mapping>
+    <servlet>
+  	<servlet-name>hSSignUp</servlet-name>
+	<servlet-class>controller.HSSignup</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>hSSignUp</servlet-name>
+	<url-pattern>/hSSignUp</url-pattern>
+   </servlet-mapping>
+	<listener>
+	   <listener-class>init.InitListener</listener-class>
+	</listener>
 </web-app>

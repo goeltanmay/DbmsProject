@@ -2,18 +2,19 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
-	    <title> Patient SignUp </title>
-	</head>
-	
-	<body bgcolor="white">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Patient Sign-Up</title>
+</head>
+<body bgcolor="white">
 		<center>
-		 <form method="post" action="successSignUp">
+		 <form method="post" action="patientSignUp">
            <table>
 			<thead>
-				<tr> <th><font size=7 color=red>Patients SignUp Here</font> </th></tr>
+				<tr> <th><font size=7 color=red>SignUp Here</font> </th></tr>
 			</thead>
 			<tbody>
+				 
 				 <tr><td><font size=5> Gender <br> <input type="radio" name="gender" value="m"> Male
   											  <input type="radio" name="gender" value="f"> Female
   											  <input type="radio" name="gender" value="o"> Other

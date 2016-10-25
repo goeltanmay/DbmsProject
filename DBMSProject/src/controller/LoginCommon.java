@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import models.Health_Supporter;
+import models.Patient;
 import models.Users;
 import orm.BaseModel;
 
@@ -43,7 +44,14 @@ public class LoginCommon extends HttpServlet {
 				req.setAttribute("is_hs", false);
 			}
 			
-			
+			ArrayList<Object> patients = Patient.select(Patient.class, where2);
+			if(patients.size()>0){
+				req.setAttribute("is_patient", true);
+			}
+			else{
+				req.setAttribute("is_patient", false);
+			}
+		
 			requestDispatcher=req.getRequestDispatcher("/home_common.jsp");
 			requestDispatcher.forward(req,res);
 		} else {

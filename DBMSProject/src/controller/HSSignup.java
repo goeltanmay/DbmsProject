@@ -9,11 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import models.Health_Supporter;
 import models.Users;
 
 
-public class SignUp extends HttpServlet {
+public class HSSignup extends HttpServlet {
 	/**
 	 * 
 	 */
@@ -23,22 +25,16 @@ public class SignUp extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("we are in gooood handssssssssssss");
 		
-		Users user=new Users();
-		
-		user.name=req.getParameter("name");
-		user.email=req.getParameter("email");
-		user.password=req.getParameter("password");
-//		user.gender=req.getParameter("gender");
-//		user.address=req.getParameter("address");
-//		user.dob=req.getParameter("dob");//2013-2-25
-		
 		RequestDispatcher rd;
 		
 		try {
-			user.save();
-			rd=req.getRequestDispatcher("successSignUp.jsp");
-			rd.forward(req, res);
-			
+			Health_Supporter hs = new Health_Supporter();
+			hs.user_id = new Users();
+			HttpSession session = req.getSession();
+			hs.user_id.id = (long) session.getAttribute("user_id");
+			hs.phone_number = req.getParameter("contact");
+			hs.save();
+			req.getRequestDispatcher("successSignUp.jsp").forward(req, res);
 			
 		} catch (NullPointerException | IllegalArgumentException
 				| IllegalAccessException | SQLException e) {
