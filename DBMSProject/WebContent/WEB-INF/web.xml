@@ -148,6 +148,14 @@
     <servlet-name>update_hs_profile</servlet-name>
     <url-pattern>/update_hs_profile</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>list_of_patients</servlet-name>
+    <servlet-class>controller.ListHSPatients</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>list_of_patients</servlet-name>
+    <url-pattern>/list_of_patients</url-pattern>
+  </servlet-mapping>
   <listener>
     <listener-class>init.InitListener</listener-class>
   </listener>

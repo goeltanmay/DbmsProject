@@ -10,7 +10,7 @@
 		<div style="width:100%;"> <!-- Main Div -->
 			<ul>
 				<li> <a href="edit_hs_profile"> Edit Your Profile </a></li>
-				<li> View list of Patients</li>
+				<li> <a href="list_of_patients"> View list of Patients </a></li>
 				<li></li>
 			</ul>
 		</div>
