@@ -30,6 +30,10 @@ public class DiagnosesAdd extends HttpServlet {
 		long pid=(long)req.getSession().getAttribute("patient_id");
 		
 		String[] addDiag = req.getParameterValues("addDiag");
+		String diagDate;
+		for (int i = 0; i < addDiag.length; i++) {
+			diagDate = req.getParameter("date_" + addDiag[i]);
+		}
 		
 		
 		

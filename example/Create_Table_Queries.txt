@@ -176,7 +176,8 @@ DROP sequence diagnosis_id_sequence;
 
 create table Observation_Type (
 ID number(10) primary key,
-Name varchar2(20) unique);
+Name varchar2(30) unique,
+observ_type varchar2(20));
 
 CREATE SEQUENCE Obs_Type_Id_Seq START WITH 1 INCREMENT BY 1;
 
@@ -201,8 +202,8 @@ DID number(10),
 OID number(10),
 Upper_Limit number(10) not null,
 Lower_Limit number(10) not null,
-Frequency varchar2(20) not null,
-Value number(10) not null);
+Frequency number(10) not null,
+Freq_Type varchar2(20) not null);
 
 CREATE SEQUENCE Nom_Obs_Id_Seq START WITH 1 INCREMENT BY 1;
 
@@ -225,6 +226,7 @@ ID number(10) primary key,
 PID number(10),
 DID number(10),
 OID number(10),
+expected varchar2(20),
 Frequency varchar2(20) not null,
 Value varchar2(20) not null);
 
@@ -246,11 +248,12 @@ DROP sequence ord_obser_type_id_seq;
 create table Records_Nom_Obs_Type (
 NID number(10) primary key,
 UserID number(10),
-DID number(10),
 OID number(10),
 Readings number(10) not null,
 Recording_Timestamp Timestamp not null,
 Observation_Timestamp Timestamp not null);
+
+alter table RECORDS_NOM_OBS_TYPE modify RECORDING_TIMESTAMP 'DD-MMM-YYYY HH24:MI:SS';
 
 CREATE SEQUENCE Rec_Nom_Id_Seq START WITH 1 INCREMENT BY 1;
 
@@ -268,7 +271,6 @@ END;
 create table Records_Ord_Obs_Type (
 ID number(10) primary key,
 UserID number(10),
-DID number(10),
 OID number(10),
 Readings number(10) not null,
 Recording_Timestamp Timestamp not null,
@@ -287,6 +289,51 @@ END;
 
 ##############################################################################################
 
-Dropping a trigger
+create table Alert_Type (
+ID number(10) primary key,
+description vrchar2(30) not null);
 
-DROP TRIGGER hr.salary_check; 
+CREATE SEQUENCE Alert_Type_Id_Seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER Alert_Type_Id_Trig
+  BEFORE INSERT ON Alert_Type
+  FOR EACH ROW
+BEGIN
+  SELECT Alert_Type_Id_Seq.nextval
+  INTO :new.ID
+  FROM dual;
+END;
+##############################################################################################
+Alert
+create table Alert (
+ID number(10) primary key,
+tid number(10) not null,
+oid number(10) not null,
+details varchar2(50) not null,
+cleared char check(cleared in('0','1')) not null);
+
+drop table alert;
+
+CREATE SEQUENCE Alert_Id_Seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER Alert_Id_Trig
+  BEFORE INSERT ON Alert
+  FOR EACH ROW
+BEGIN
+  SELECT Alert_Id_Seq.nextval
+  INTO :new.ID
+  FROM dual;
+END;
+##############################################################################################
+Outside the limit alert:
+
+CREATE OR REPLACE TRIGGER Alert_Outside_Lim_Trig
+  After INSERT ON RECORDS_NOM_OBS_TYPE
+  FOR EACH ROW
+BEGIN
+  SELECT Alert_Type_Id_Seq.nextval
+  INTO :new.ID 
+  FROM dual;
+END;
+
+
