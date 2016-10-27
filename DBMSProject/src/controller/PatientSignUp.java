@@ -38,6 +38,8 @@ public class PatientSignUp extends HttpServlet {
 		p.address=request.getParameter("address");
 		p.dob=request.getParameter("dob");
 		
+		request.getSession().setAttribute("patient_id",request.getSession().getAttribute("user_id"));
+		
 		RequestDispatcher rd=null;
 		
 		try {

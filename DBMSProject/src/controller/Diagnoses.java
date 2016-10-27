@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
@@ -8,6 +10,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import orm.BaseModel;
 
 
 public class Diagnoses extends HttpServlet {
@@ -19,22 +23,64 @@ public class Diagnoses extends HttpServlet {
 	public String dob;
 	public String patientCategory;
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res)
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		ArrayList<String> diagnos = new ArrayList<String>();
-		diagnos.add("\"HIV\"");
-		diagnos.add("\"Chicken Pox\"");
-		diagnos.add("\"TB\"");
-		diagnos.add("\"Malaria\"");
-		req.setAttribute("existDiag", diagnos);
+		long pid=(long)req.getSession().getAttribute("patient_id");
+		System.out.println("Patient id is:"+pid);
+		ResultSet rs=null;
+		
 
-		ArrayList<String> remainDiag = new ArrayList<String>();
-		remainDiag.add("\"Cancer\"");
-		remainDiag.add("\"Diabetes\"");
-		remainDiag.add("\"Heart Disease\"");
-		remainDiag.add("\"Flu\"");
-		req.setAttribute("remainDiag", remainDiag);
+		ArrayList<String> existingDiagnosis = new ArrayList<String>();
+		ArrayList<String> remainingDiagnosis = new ArrayList<String>();
+		
+		try {
+			rs=BaseModel.selectRaw("select disease_name from disease_type where id=(select did from diagnosis where pid="+pid+")");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			while(rs.next())
+			{		
+				existingDiagnosis.add("\""+rs.getString(1)+"\"");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*existingDiagnosis.add("\"Chicken Pox\"");
+		existingDiagnosis.add("\"TB\"");
+		existingDiagnosis.add("\"Malaria\"");*/
+		
+		
+		req.setAttribute("existDiag", existingDiagnosis);
+
+		try {
+			rs=BaseModel.selectRaw("select disease_name from disease_type where id<>(select did from diagnosis where pid="+pid+")");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			while(rs.next())
+			{	
+				remainingDiagnosis.add("\""+rs.getString(1)+"\"");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+	/*	remainingDiagnosis.add("\"Cancer\"");
+		remainingDiagnosis.add("\"Diabetes\"");
+		remainingDiagnosis.add("\"Heart Disease\"");
+		remainingDiagnosis.add("\"Flu\"");*/
+		
+		req.setAttribute("remainDiag", remainingDiagnosis);
 		
 		req.getRequestDispatcher("diagnoses.jsp").forward(req, res);
     }

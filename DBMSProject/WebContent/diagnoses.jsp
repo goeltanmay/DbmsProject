@@ -15,9 +15,9 @@
 				document.getElementById("existingDiag").innerHTML = text;
 
 				var remainingDiag = ${remainDiag};
-				var i;
+				var i;0
 				var textRemain = "";
-				for (i = 0; i < diagnoses.length; i++) {
+				for (i = 0; i < remainingDiag.length; i++) {
 					textRemain += "<input type='checkbox' name='addDiag' value='" + remainingDiag[i] + "' /> " + remainingDiag[i] + "<br/>";
 				}
 				document.getElementById("remainingDiag").innerHTML = textRemain;

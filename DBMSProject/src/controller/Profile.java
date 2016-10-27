@@ -33,7 +33,7 @@ public class Profile extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException 
 	{
-			long pid=(long) req.getSession().getAttribute("patient_id");
+			long pid=(long) req.getSession().getAttribute("user_id");
 			String category="well";
 			String where = "id=" + pid;
 			String wherePatient = "user_id=" + pid;

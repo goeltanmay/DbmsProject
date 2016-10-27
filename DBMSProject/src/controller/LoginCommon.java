@@ -48,7 +48,7 @@ public class LoginCommon extends HttpServlet {
 			ArrayList<Object> patients = Patient.select(Patient.class, where2);
 			if(patients.size()>0){
 				req.setAttribute("is_patient", true);
-				session.setAttribute("patient_id", ((Users)userList.get(0)).id);
+				req.getSession().setAttribute("patient_id",req.getSession().getAttribute("user_id"));
 				session.setAttribute("patient_password",req.getParameter("password"));
 
 			}
