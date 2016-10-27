@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Diagnosis;
+
 
 public class DiagnosesAdd extends HttpServlet {
 	/**
@@ -22,10 +24,24 @@ public class DiagnosesAdd extends HttpServlet {
 	public String dob;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
-			throws ServletException, IOException {
+			throws ServletException, IOException 
+	{
+		
+		long pid=(long)req.getSession().getAttribute("patient_id");
+		
 		String[] addDiag = req.getParameterValues("addDiag");
 		
-		res.sendRedirect("successDiagnosesUpdate.jsp");
+		
+		
+		for(String str:addDiag)
+		{
+		 Diagnosis d=new Diagnosis();	
+		 d.pid=pid;
+		 d.did=1;
+		 d.Diagnosis_Date="";
+		}
+		
+		req.getRequestDispatcher("successDiagnosesUpdate.jsp").forward(req, res);;
     }
 
 	

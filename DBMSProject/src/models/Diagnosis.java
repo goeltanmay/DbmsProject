@@ -2,8 +2,8 @@ package models;
 
 public class Diagnosis 
 {
-	long id;
-	long pid;
-	long did;
-	String Diagnosis_Date;
+	public long id;
+	public long pid;
+	public long did;
+	public String Diagnosis_Date;
 }

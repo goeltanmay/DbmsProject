@@ -24,6 +24,9 @@ public class DiagnosesRemove extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		String[] removeDiag = req.getParameterValues("removeDiag");
+		
+		
+		
 		boolean success = true;//Call db to check if account already exists
 		res.sendRedirect("successDiagnosesUpdate.jsp");
     }
