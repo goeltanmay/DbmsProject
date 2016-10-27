@@ -30,12 +30,11 @@ public class Diagnoses extends HttpServlet {
 		System.out.println("Patient id is:"+pid);
 		ResultSet rs=null;
 		
-
 		ArrayList<Diag> existingDiagnosis = new ArrayList<Diag>();
 		ArrayList<Diag> remainingDiagnosis = new ArrayList<Diag>();
 		
 		try {
-			rs=BaseModel.selectRaw("select disease_name from disease_type where id=(select did from diagnosis where pid="+pid+")");
+			rs=BaseModel.selectRaw("select dis.disease_name,diag.diagnosis_date from diagnosis diag,disease_type dis where diag.did=dis.id and diag.pid="+pid);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,7 +43,7 @@ public class Diagnoses extends HttpServlet {
 		try {
 			while(rs.next())
 			{		
-				existingDiagnosis.add(new Diag(rs.getString(1), /*rs.getString(2)*/ "234"));
+				existingDiagnosis.add(new Diag(rs.getString(1),rs.getString(2)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
