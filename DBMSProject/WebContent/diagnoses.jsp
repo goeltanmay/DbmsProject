@@ -17,7 +17,7 @@
 			<tbody>
 			<c:forEach var="existDiag" items="${existDiag}" >
 				<tr><td><input type='checkbox' name='removeDiag' value="${existDiag.name}"/>${existDiag.name} </td> 
-					<td>Diagnosis Date ${existDiag.date}</td></tr><br/>
+					<td>${existDiag.date}</td></tr><br/>
 			</c:forEach>
 				 <br/>
 				  <tr><td><font size=5> <input type=submit value="Remove Selected Diagnoses">
@@ -29,14 +29,14 @@
 		   <table style="width:50%">
 			<thead>
 				<tr><th align="left"><font size=5 color=red>Add new diagnoses</font> </th>
-					<th align="left"><font size=5 color=red>Add Diagnosis Date</font> </th>
 				</tr>
 			</thead>
 			<tbody>
 				 <c:forEach var="remainDiag" items="${remainDiag}" >
 					<tr><td><input type='checkbox' name='addDiag' value="${remainDiag}"/>${remainDiag.name} </td> 
-						<td><input type="date" name="date_${remainDiag}" id="dob" size=20></tr><br/>
-				 </c:forEach><br/>
+					</tr><br/>
+				 </c:forEach>
+				 <tr><td>Date<input type="date" name="date" id="dob" size=20></td></tr><br/><br/>
 				 <tr><td><font size=5> <input type=submit value="Add Selected Diagnoses">
 				        </font></td></tr>
 			</tbody>
