@@ -24,6 +24,10 @@ public class DiagnosesAdd extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		String[] addDiag = req.getParameterValues("addDiag");
+		String diagDate;
+		for (int i = 0; i < addDiag.length; i++) {
+			diagDate = req.getParameter("date_" + addDiag[i]);
+		}
 		
 		res.sendRedirect("successDiagnosesUpdate.jsp");
     }

@@ -34,6 +34,7 @@ INSERT INTO hs_authorization(pid, hsid, auth_date) VALUES (3, 4, '21-Oct-2016');
 Disease_type
 INSERT INTO disease_type(disease_name) VALUES ('Heart Disease');
 INSERT INTO disease_type(disease_name) VALUES ('HIV');
+INSERT INTO disease_type(disease_name) VALUES ('COPD');
 
 ########################################################################################################
 Diagnosis
@@ -47,9 +48,88 @@ INSERT INTO Health_Supporter(phone_number, user_id) VALUES ('9856565656', 3);
 INSERT INTO Health_Supporter(phone_number, user_id) VALUES ('9855555555', 4);
 
 ########################################################################################################
+Observation_Type
+INSERT INTO Observation_Type(name, observ_type) VALUES ('Weight', 'lbs');
+INSERT INTO Observation_Type(name, observ_type) VALUES ('Oxygen Saturation', 'SPO2');
+INSERT INTO Observation_Type(name) VALUES ('Pain');
+INSERT INTO Observation_Type(name) VALUES ('Mood');
+INSERT INTO Observation_Type(name, observ_type) VALUES ('Temperature', 'F');
 
+########################################################################################################
+Nominal_Observation_Type
 
+Assumptions 
+General: pid null, did null, oid not null
+Disease specific: pid null, did not null, oid not null
+Recommendation: pid null, did null, oid not null
+
+INSERT INTO NOMINAL_OBSERVATION_TYPE(oid, upper_limit, lower_limit, frequency, freq_type) VALUES 
+(1, 200, 120, 7, 'days');
+
+INSERT INTO NOMINAL_OBSERVATION_TYPE(did, oid, upper_limit, lower_limit, frequency, freq_type) VALUES 
+(1, 1, 200, 120, 7, 'days');
+
+INSERT INTO NOMINAL_OBSERVATION_TYPE(did, oid, upper_limit, lower_limit, frequency, freq_type) VALUES 
+(1, 2, 159, 140, 1, 'days');
+
+INSERT INTO NOMINAL_OBSERVATION_TYPE(did, oid, upper_limit, lower_limit, frequency, freq_type) VALUES 
+(1, 21, 99, 90, 1, 'days');
+
+INSERT INTO NOMINAL_OBSERVATION_TYPE(did, oid, upper_limit, lower_limit, frequency, freq_type) VALUES 
+(2, 1, 200, 120, 7, 'days');
+
+INSERT INTO NOMINAL_OBSERVATION_TYPE(did, oid, upper_limit, lower_limit, frequency, freq_type) VALUES 
+(21, 3, 99, 90, 1, 'days');
+
+INSERT INTO NOMINAL_OBSERVATION_TYPE(did, oid, upper_limit, lower_limit, frequency, freq_type) VALUES 
+(21, 6, 100, 95, 1, 'days');
+
+INSERT INTO NOMINAL_OBSERVATION_TYPE(pid, oid, upper_limit, lower_limit, frequency, freq_type) VALUES 
+(2, 1, 190, 120, 7, 'days');
+
+########################################################################################################
+Ordinal_Observation_Type
+INSERT INTO ORDINAL_OBSERVATION_TYPE(did, oid, expected, frequency, freq_type) VALUES 
+(1, 5, 'Happy', 7, 'days');
+
+INSERT INTO ORDINAL_OBSERVATION_TYPE(did, oid, expected, frequency, freq_type) VALUES 
+(2, 4, '5', 1, 'days');
+
+INSERT INTO ORDINAL_OBSERVATION_TYPE(pid, oid, expected, frequency, freq_type) VALUES 
+(2, 4, 5, 1, 'days');
+commit;
+
+########################################################################################################
+RECORDS_NOM_OBS_TYPE
+INSERT INTO RECORDS_NOM_OBS_TYPE(userid, oid, readings, recording_timestamp, observation_timestamp) VALUES 
+(1, 1, 140, '15-Oct-2016 10:05:06', '15-Oct-2016 11:05:06');
+
+INSERT INTO RECORDS_NOM_OBS_TYPE(userid, oid, readings, recording_timestamp, observation_timestamp) VALUES 
+(1, 2, 145, '15-Oct-2016 01:05:06', '15-Oct-2016 11:05:06');
+
+INSERT INTO RECORDS_NOM_OBS_TYPE(userid, oid, readings, recording_timestamp, observation_timestamp) VALUES 
+(1, 21, 95, '15-Oct-2016 01:05:06', '15-Oct-2016 11:05:06');
+
+INSERT INTO RECORDS_NOM_OBS_TYPE(userid, oid, readings, recording_timestamp, observation_timestamp) VALUES 
+(2, 1, 180, '10-Oct-2016', '11-Oct-2016');
+
+INSERT INTO RECORDS_NOM_OBS_TYPE(userid, oid, readings, recording_timestamp, observation_timestamp) VALUES 
+(2, 1, 195, '17-Oct-2016', '17-Oct-2016');
+
+########################################################################################################
+ALERT_TYPE
+
+INSERT INTO ALERT_TYPE(description) VALUES ('Outside the limit');
+INSERT INTO ALERT_TYPE(description) VALUES ('Low activity');
+
+########################################################################################################
+Alert
+INSERT INTO ALERT_TYPE(description) VALUES ('Outside the limit');
+INSERT INTO ALERT_TYPE(description) VALUES ('Outside the limit');
 
 ########################################################################################################
 Alter table users drop column (gender, address, dob);
 Alter table HS_Authorization add auth_date date not null;
+
+
+select * from RECORDS_NOM_OBS_TYPE R, NOMINAL_OBSERVATION_TYPE N where 

@@ -31,8 +31,8 @@ public class Diagnoses extends HttpServlet {
 		ResultSet rs=null;
 		
 
-		ArrayList<String> existingDiagnosis = new ArrayList<String>();
-		ArrayList<String> remainingDiagnosis = new ArrayList<String>();
+		ArrayList<Diag> existingDiagnosis = new ArrayList<Diag>();
+		ArrayList<Diag> remainingDiagnosis = new ArrayList<Diag>();
 		
 		try {
 			rs=BaseModel.selectRaw("select disease_name from disease_type where id=(select did from diagnosis where pid="+pid+")");
@@ -44,7 +44,7 @@ public class Diagnoses extends HttpServlet {
 		try {
 			while(rs.next())
 			{		
-				existingDiagnosis.add("\""+rs.getString(1)+"\"");
+				existingDiagnosis.add(new Diag(rs.getString(1), /*rs.getString(2)*/ "234"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -67,7 +67,7 @@ public class Diagnoses extends HttpServlet {
 		try {
 			while(rs.next())
 			{	
-				remainingDiagnosis.add("\""+rs.getString(1)+"\"");
+				remainingDiagnosis.add(new Diag(rs.getString(1)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
