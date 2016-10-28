@@ -177,7 +177,7 @@ DROP sequence diagnosis_id_sequence;
 create table Observation_Type (
 ID number(10) primary key,
 Name varchar2(30) unique,
-observ_type varchar2(20));
+observ_metric varchar2(20));
 
 CREATE SEQUENCE Obs_Type_Id_Seq START WITH 1 INCREMENT BY 1;
 
@@ -248,6 +248,7 @@ DROP sequence ord_obser_type_id_seq;
 create table Records_Nom_Obs_Type (
 NID number(10) primary key,
 UserID number(10),
+PID number(10),
 OID number(10),
 Readings number(10) not null,
 Recording_Timestamp Timestamp not null,
@@ -271,6 +272,7 @@ END;
 create table Records_Ord_Obs_Type (
 ID number(10) primary key,
 UserID number(10),
+PID number(10),
 OID number(10),
 Readings number(10) not null,
 Recording_Timestamp Timestamp not null,
@@ -307,10 +309,11 @@ END;
 Alert
 create table Alert (
 ID number(10) primary key,
-tid number(10) not null,
+pid number(10) not null,
 oid number(10) not null,
+tid number(10) not null,
 details varchar2(50) not null,
-cleared char check(cleared in('0','1')) not null);
+cleared char default '0' check(cleared in('0','1')));
 
 drop table alert;
 
@@ -327,13 +330,81 @@ END;
 ##############################################################################################
 Outside the limit alert:
 
+CREATE OR REPLACE Procedure Alert_Outside_Proc
+   ( noid_in IN number, pid_in IN number )
+
+IS
+   UpperObsId number;
+   LowerObsId number;
+   
+   cursor c1 is
+	select Distinct A.OID from(select R.Readings, R.NOID, N.OID, N.Upper_Limit, ROW_NUMBER() OVER (ORDER BY R.RECORDING_TIMESTAMP desc) as rownumber 
+from RECORDS_NOM_OBS_TYPE R, NOMINAL_OBSERVATION_TYPE N where R.NOID=N.ID and R.NOID=noid_in and R.PID=pid_in) A 
+where A.rownumber < 5 and A.Readings > A.Upper_limit;
+
+  cursor c2 is
+	select Distinct A.OID from(select R.Readings, R.NOID, N.OID, N.Lower_limit, ROW_NUMBER() OVER (ORDER BY R.RECORDING_TIMESTAMP desc) as rownumber 
+from RECORDS_NOM_OBS_TYPE R, NOMINAL_OBSERVATION_TYPE N where R.NOID=N.ID and R.NOID=noid_in and R.PID=pid_in) A 
+where A.rownumber < 5 and A.Readings < A.Lower_limit;
+
+BEGIN
+   open c1;
+   fetch c1 into UpperObsId;
+   IF UpperObsId IS NOT NULL then
+	insert into ALERT(PID, OID, TID, Details) values(pid_in, UpperObsId, 1,'Above upperlimit');
+   END IF;
+	
+	open c2;
+   fetch c2 into LowerObsId;
+   IF LowerObsId IS NOT NULL then
+	insert into ALERT(PID, OID, TID, Details) values(pid_in, LowerObsId, 1,'Below lower limit');
+	commit;
+   END IF;
+END;
+
+drop procedure Alert_Outside_Proc;
+####################################################################################################################
+Low Activity Alerts
+
+create or replace Procedure Alert_Low_Activity
+   (pid_in IN number)
+
+IS
+   cursor c1 is
+	select N1.OID from NOMINAL_OBSERVATION_TYPE N1 where N1.ID IN (select A.NOID from(select R.RECORDING_TIMESTAMP, R.NOID, N.Frequency, ROW_NUMBER() over 
+(partition by R.NOID order by R.RECORDING_TIMESTAMP desc) as rownumber 
+from RECORDS_NOM_OBS_TYPE R, NOMINAL_OBSERVATION_TYPE N where R.NOID=N.ID and R.PID=pid_in) A where A.rownumber=1 and 
+(A.RECORDING_TIMESTAMP ) < (SYSDATE - A.Frequency) group by A.NOID);
+
+BEGIN   
+   FOR records in c1 LOOP
+    insert into ALERT(PID, OID, TID, Details) values(pid_in, records.OID, 2,'Low Activity');
+   END LOOP;
+   commit;
+   
+END;
+drop procedure Alert_Low_Activity;
+#################################################################################################################### 
+
+select N1.OID from NOMINAL_OBSERVATION_TYPE N1 where N1.ID = (select NOID from(select R.Readings, R.NOID, N.Upper_Limit, ROW_NUMBER() over 
+(partition by R.NOID order by R.RECORDING_TIMESTAMP desc) as rownumber 
+from RECORDS_NOM_OBS_TYPE R, NOMINAL_OBSERVATION_TYPE N where R.NOID=N.ID and R.USERID=1) A where A.rownumber < 5 and A.Readings > A.Upper_limit 4
+group by A.NOID); 
+
+
 CREATE OR REPLACE TRIGGER Alert_Outside_Lim_Trig
   After INSERT ON RECORDS_NOM_OBS_TYPE
   FOR EACH ROW
+DECLARE
+	ObsId number;
 BEGIN
-  SELECT Alert_Type_Id_Seq.nextval
-  INTO :new.ID 
-  FROM dual;
+ select Distinct A.OID Into ObsId  from(select R.Readings, R.NOID, N.OID, N.Upper_Limit, ROW_NUMBER() OVER (ORDER BY R.RECORDING_TIMESTAMP desc) as rownumber 
+from RECORDS_NOM_OBS_TYPE R, NOMINAL_OBSERVATION_TYPE N where R.NOID=N.ID and R.NOID=:new.NOID and R.PID=:new.PID) A 
+where A.rownumber < 5 and A.Readings > A.Upper_limit;
+
+ IF ObsId IS NOT NULL then
+  insert into ALERT(PID, OID, TID, Details) values(:new.PID, ObsId, 1,'Above upperlimit');
+ END IF;
 END;
 
-
+drop trigger Alert_Outside_Lim_Trig;
