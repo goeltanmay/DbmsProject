@@ -53,7 +53,8 @@ public class DiagnosesRemove extends HttpServlet {
 			flag=diagnosis.delete();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace()
+			;
 		}
 		  
 		}
@@ -61,7 +62,7 @@ public class DiagnosesRemove extends HttpServlet {
 		
 		
 		if(flag)
-		res.sendRedirect("successDiagnosesUpdate.jsp");
+		req.getRequestDispatcher("successDiagnosesUpdate.jsp").forward(req,res);;
     }
 
 	

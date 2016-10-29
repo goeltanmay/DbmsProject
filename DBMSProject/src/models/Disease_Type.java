@@ -1,7 +1,7 @@
 package models;
 
-public class Disease_Type 
-{
-	long id;
-	String disease_name;
+import orm.BaseModel;
+
+public class Disease_Type extends BaseModel{
+	public String disease_name;
 }

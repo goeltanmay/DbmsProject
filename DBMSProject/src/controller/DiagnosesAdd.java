@@ -1,14 +1,21 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import orm.BaseModel;
 import models.Diagnosis;
+import models.Disease_Type;
+import models.Users;
 
 
 public class DiagnosesAdd extends HttpServlet {
@@ -31,15 +38,34 @@ public class DiagnosesAdd extends HttpServlet {
 		
 		String[] addDiag = req.getParameterValues("addDiag");
 		String diagDate = req.getParameter("date");
+		ResultSet rs=null;
+		String where=null;
 		
-		
-		
-		for(String str:addDiag)
+		for(int i=0;i<addDiag.length;i++)
 		{
-		 Diagnosis d=new Diagnosis();	
-		 d.pid=pid;
-		 d.did=1;
-		 d.Diagnosis_Date="";
+		 Diagnosis diagnosis=new Diagnosis();	
+		 diagnosis.pid=pid;
+		 diagnosis.Diagnosis_Date=diagDate;
+		 
+		 where="disease_name='"+addDiag[i]+"'";
+		 
+		 System.out.println("where is:"+where);
+		 
+		 ArrayList<Object> DiseaseList=BaseModel.select(Disease_Type.class,where);
+		 
+		 if(DiseaseList.size()>0)
+		 {
+				diagnosis.did=((Disease_Type)DiseaseList.get(0)).id;
+		 }
+	
+		 try {
+			diagnosis.save();
+		} catch (NullPointerException | IllegalArgumentException
+				| IllegalAccessException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 		}
 		
 		req.getRequestDispatcher("successDiagnosesUpdate.jsp").forward(req, res);;

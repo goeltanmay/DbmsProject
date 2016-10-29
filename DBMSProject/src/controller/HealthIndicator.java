@@ -20,7 +20,7 @@ public class HealthIndicator extends HttpServlet {
 	public String dob;
 	public String patientCategory;
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res)
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		ArrayList<HealthObservation> observationsList = new ArrayList<HealthObservation>();
 		

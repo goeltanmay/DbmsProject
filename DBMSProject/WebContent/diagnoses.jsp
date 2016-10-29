@@ -33,7 +33,7 @@
 			</thead>
 			<tbody>
 				 <c:forEach var="remainDiag" items="${remainDiag}" >
-					<tr><td><input type='checkbox' name='addDiag' value="${remainDiag}"/>${remainDiag.name} </td> 
+					<tr><td><input type='checkbox' name='addDiag' value="${remainDiag.name}"/>${remainDiag.name} </td> 
 					</tr><br/>
 				 </c:forEach>
 				 <tr><td>Date<input type="date" name="date" id="dob" size=20></td></tr><br/><br/>
