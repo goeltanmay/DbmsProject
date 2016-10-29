@@ -57,7 +57,7 @@ public class Diagnoses extends HttpServlet {
 		req.setAttribute("existDiag", existingDiagnosis);
 
 		try {
-			rs=BaseModel.selectRaw("select disease_name from disease_type where id<>(select did from diagnosis where pid="+pid+")");
+			rs=BaseModel.selectRaw("select disease_name from disease_type where id not in(select did from diagnosis where pid="+pid+")");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

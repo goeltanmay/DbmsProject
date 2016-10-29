@@ -1,8 +1,9 @@
 package models;
 
-public class Diagnosis 
+import orm.BaseModel;
+
+public class Diagnosis extends BaseModel
 {
-	public long id;
 	public long pid;
 	public long did;
 	public String Diagnosis_Date;
