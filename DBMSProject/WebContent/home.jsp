@@ -12,7 +12,7 @@
 	    <form method=post action=profile>
 	    	<font size=5><input type="submit" action="PatientEditProfile" value="View or Edit Profile"/> </font>
 	    </form><br>
-	     <form method=post action=profile>
+	     <form method=post action=list_of_health_supporters>
 	    	<font size=5><input type="submit" action="ListHealthSupporters" value="View or Edit Health Supporter"/> </font>
 	    </form><br>
 	    <form method=post action=diagnoses>
