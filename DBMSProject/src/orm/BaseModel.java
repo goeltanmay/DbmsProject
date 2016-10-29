@@ -6,13 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 //import com.sun.java.util.jar.pack.Package.Class.Field;
 
-public abstract class BaseModel {
+public class BaseModel {
 
 	public long id;
 	
@@ -209,6 +210,7 @@ public abstract class BaseModel {
 		if(resultSet != null)
 			while(resultSet.next()){
 				JsonObject jsonObject = new JsonObject();
+				Gson gson = new Gson();
 				for (Field f : clss.getFields())
 				{
 					if(f.getType() == long.class) jsonObject.addProperty(f.getName(), resultSet.getLong(f.getName()));
@@ -216,6 +218,13 @@ public abstract class BaseModel {
 					else if(f.getType() == String.class) jsonObject.addProperty(f.getName(), resultSet.getString(f.getName()));
 					else if(f.getType() == double.class) jsonObject.addProperty(f.getName(), resultSet.getDouble(f.getName()));
 					else if(f.getType() == float.class) jsonObject.addProperty(f.getName(), resultSet.getFloat(f.getName()));
+					else if(f.getType().isAssignableFrom(BaseModel.class)){
+						long id = resultSet.getLong(f.getName());
+						String where = "id = " + id;
+						ArrayList<Object> list = BaseModel.select(f.getType(), where);
+						jsonObject.add(f.getName(), gson.toJsonTree(list.get(0)));
+					}
+					
 				}
 				arrayList.add(jsonObject);
 			}
