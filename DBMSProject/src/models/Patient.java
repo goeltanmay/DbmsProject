@@ -174,5 +174,16 @@ public class Patient extends BaseModel{
 		}
 		
 	}
+	
+	public ArrayList<Disease_Type> getDiseases(){
+		String where = "pid = " + this.id;
+		ArrayList<Disease_Type> diseases = new ArrayList<Disease_Type>();
+		ArrayList<Object> diagnosis = Diagnosis.select(Diagnosis.class, where);
+		for( Object d : diagnosis){
+			if(d != null)
+				diseases.add(((Diagnosis)d).did);
+		}
+		return diseases;
+	}
 
 }
