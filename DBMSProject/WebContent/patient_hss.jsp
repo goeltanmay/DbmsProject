@@ -10,6 +10,14 @@
 </head>
 <body>
 <table>
+<tr>
+<th>Name
+</th>
+<th>Contact Number
+</th>
+<th>Remove?
+</th>
+</tr>
 	<c:forEach items="${health_supporters}" var="hs">
 		<c:if test="${hs != null }">
 			<tr>
