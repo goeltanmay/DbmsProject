@@ -20,6 +20,8 @@ public class ListHealthSupporters extends HttpServlet{
 		Patient p = (Patient) list.get(0);
 		ArrayList<Health_Supporter> hss = p.getHealthSupporters();
 		req.setAttribute("health_supporters", hss);
+		ArrayList<Object> all_hs = Health_Supporter.select(Health_Supporter.class,"");
+		req.setAttribute("all_hs", all_hs);
 		try {
 			req.getRequestDispatcher("/patient_hss.jsp").forward(req, resp);
 		} catch (ServletException | IOException e) {

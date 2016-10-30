@@ -218,11 +218,11 @@ public class BaseModel {
 					else if(f.getType() == String.class) jsonObject.addProperty(f.getName(), resultSet.getString(f.getName()));
 					else if(f.getType() == double.class) jsonObject.addProperty(f.getName(), resultSet.getDouble(f.getName()));
 					else if(f.getType() == float.class) jsonObject.addProperty(f.getName(), resultSet.getFloat(f.getName()));
-					else if(f.getType().isAssignableFrom(BaseModel.class)){
+					else if(BaseModel.class.isAssignableFrom(f.getType())){
 						long id = resultSet.getLong(f.getName());
 						String where = "id = " + id;
 						ArrayList<Object> list = BaseModel.select(f.getType(), where);
-						jsonObject.add(f.getName(), gson.toJsonTree(list.get(0)));
+						if(list.size()>0) jsonObject.add(f.getName(), gson.toJsonTree(list.get(0)));
 					}
 					
 				}
