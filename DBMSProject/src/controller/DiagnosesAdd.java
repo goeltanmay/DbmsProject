@@ -59,8 +59,10 @@ public class DiagnosesAdd extends HttpServlet {
 		
 		for(int i=0;i<addDiag.length;i++)
 		{
-		 Diagnosis diagnosis=new Diagnosis();	
-		 diagnosis.pid=pid;
+		 Diagnosis diagnosis=new Diagnosis();
+		 Patient pat = new Patient();
+		 pat.id = pid;
+		 diagnosis.pid=pat;
 		 diagnosis.Diagnosis_Date=diagDate;
 		 
 		 where="disease_name='"+addDiag[i]+"'";
@@ -69,9 +71,8 @@ public class DiagnosesAdd extends HttpServlet {
 		 
 		 ArrayList<Object> DiseaseList=BaseModel.select(Disease_Type.class,where);
 		 
-		 if(DiseaseList.size()>0)
-		 {
-				diagnosis.did=((Disease_Type)DiseaseList.get(0)).id;
+		 if(DiseaseList.size()>0) {
+				diagnosis.did=(Disease_Type)DiseaseList.get(0);
 		 }
 	
 		 try {

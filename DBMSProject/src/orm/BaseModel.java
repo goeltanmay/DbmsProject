@@ -94,7 +94,7 @@ public class BaseModel {
 			System.out.println(updateStatement);
 		}
 		
-		System.out.println("the final update statement is:"+updateStatement);
+//		System.out.println("the final update statement is:"+updateStatement);
 		
 		if (updateStatement.endsWith(",")) {
 		    updateStatement = updateStatement.substring(0, updateStatement.length() - 1);
@@ -102,7 +102,7 @@ public class BaseModel {
 		
 		updateStatement+=" where id="+this.id; 
         
-		System.out.println("the final update statement is:"+updateStatement);
+//		System.out.println("the final update statement is:"+updateStatement);
 		//returns the final update query
 		return updateStatement;
 	}
@@ -211,6 +211,28 @@ public class BaseModel {
 		return objectArrayList;
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BaseModel other = (BaseModel) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
 	private static ArrayList<JsonObject> parseResult(Class clss, ResultSet resultSet) throws SQLException, InstantiationException, IllegalAccessException {
 		ArrayList<JsonObject> arrayList = new ArrayList<JsonObject>();
 		if(resultSet != null)
