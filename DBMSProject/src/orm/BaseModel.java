@@ -74,7 +74,10 @@ public class BaseModel {
 			{
 				// detecting foreign keys
 				updateStatement += f.getName() + "=";
-				updateStatement += ((BaseModel)f.get(this)).id + ",";
+				if((BaseModel)f.get(this) != null)
+					updateStatement += ((BaseModel)f.get(this)).id + ",";
+				else 
+					updateStatement += "null,";
 				continue;
 			}
 			

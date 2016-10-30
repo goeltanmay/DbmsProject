@@ -164,6 +164,22 @@
     <servlet-name>list_of_health_supporters</servlet-name>
     <url-pattern>/list_of_health_supporters</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>update_hs</servlet-name>
+    <servlet-class>controller.UpdateHealthSupporter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>update_hs</servlet-name>
+    <url-pattern>/update_hs</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>remove_hs</servlet-name>
+    <servlet-class>controller.RemoveHealthSupporter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>remove_hs</servlet-name>
+    <url-pattern>/remove_hs</url-pattern>
+  </servlet-mapping>
   <listener>
     <listener-class>init.InitListener</listener-class>
   </listener>

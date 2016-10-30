@@ -1,5 +1,6 @@
 package models;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import orm.BaseModel;
@@ -32,6 +33,102 @@ public class Patient extends BaseModel{
 		hss.add(hs_id2);
 		return hss;
 		// now that we have hsids , we can look for HSID objects.
+	}
+	
+	public void setHealthSupporter(String role, Health_Supporter hs){
+		String where = "pid = " + this.id;
+		ArrayList<Object> sick_patients = Sick_Patient.select(Sick_Patient.class, where);
+		if(sick_patients.size()>0){
+			Sick_Patient s = (Sick_Patient) sick_patients.get(0);
+			if(role.equalsIgnoreCase("primary")){
+				s.hsid1 = hs;
+				try {
+					s.save();
+				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else{
+				s.hsid2 = hs;
+				try {
+					s.save();
+				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		ArrayList<Object> well_patients = Well_Patient.select(Well_Patient.class, where);
+		if(well_patients.size()>0){
+			Well_Patient s = (Well_Patient) well_patients.get(0);
+			if(role.equalsIgnoreCase("primary")){
+				s.hsid1 = hs;
+				try {
+					s.save();
+				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else{
+				s.hsid2 = hs;
+				try {
+					s.save();
+				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public void remove_hs(Health_Supporter hs){
+		String where = "pid = " + this.id;
+		ArrayList<Object> sick_patients = Sick_Patient.select(Sick_Patient.class, where);
+		if(sick_patients.size()>0){
+			Sick_Patient s = (Sick_Patient) sick_patients.get(0);
+			if(hs.id == s.hsid1.id){
+				s.hsid1= null;
+				try {
+					s.save();
+				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(hs.id == s.hsid2.id){
+				s.hsid2 = null;
+				try {
+					s.save();
+				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		ArrayList<Object> well_patients = Well_Patient.select(Well_Patient.class, where);
+		if(well_patients.size()>0){
+			Well_Patient s = (Well_Patient) well_patients.get(0);
+			if(hs.id == s.hsid1.id){
+				s.hsid1= null;
+				try {
+					s.save();
+				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(hs.id == s.hsid2.id){
+				s.hsid2 = null;
+				try {
+					s.save();
+				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }

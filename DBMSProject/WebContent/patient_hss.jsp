@@ -11,15 +11,17 @@
 <body>
 <table>
 	<c:forEach items="${health_supporters}" var="hs">
-		<tr>
-			<td> ${hs.user_id.name}</td>
-			<td> ${hs.phone_number}</td>
-			<td> url to remove </td>
-		</tr>
+		<c:if test="${hs != null }">
+			<tr>
+				<td> ${hs.user_id.name}</td>
+				<td> ${hs.phone_number}</td>
+				<td> <a href="remove_hs?hs=${hs.id}">remove</a></td>
+			</tr>
+		</c:if>
 	</c:forEach>
 </table>
 
-<form action="">
+<form action="update_hs" method="post">
 	<select name="hs_role">
 		<option value="primary"> Primary </option>
 		<option value="secondary"> Secondary </option>
@@ -29,7 +31,7 @@
 			<option value="${hs.id}">${hs.user_id.name }</option>
 		</c:forEach>
 	</select>
-	<submit> Add new Health Supporter </submit>
+	<input type="submit" value="Add new HS">
 </form>
 </body>
 </html>
