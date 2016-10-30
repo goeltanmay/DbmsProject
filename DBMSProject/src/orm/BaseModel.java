@@ -138,7 +138,10 @@ public class BaseModel {
 			if(BaseModel.class.isAssignableFrom(f.getType())){
 				// detecting foreign keys
 				fieldsString += f.getName() + ",";
-				valuesString += ((BaseModel)f.get(this)).id + ",";
+				if((BaseModel)f.get(this) != null)
+					valuesString += ((BaseModel)f.get(this)).id + ",";
+				else
+					valuesString +="null, ";
 				continue;
 			}
 			fieldsString += f.getName() + ",";

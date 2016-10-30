@@ -58,9 +58,7 @@ public class DiagnosesRemove extends HttpServlet {
 		}
 		  
 		}
-		
-		
-		
+		// If all diagnosis have been removed. change this patient to well.
 		if(flag)
 		req.getRequestDispatcher("successDiagnosesUpdate.jsp").forward(req,res);;
     }

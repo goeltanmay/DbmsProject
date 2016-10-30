@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 import orm.BaseModel;
 import models.Diagnosis;
 import models.Disease_Type;
+import models.Health_Supporter;
+import models.Patient;
 import models.Users;
 
 
@@ -36,10 +38,24 @@ public class DiagnosesAdd extends HttpServlet {
 		
 		long pid=(long)req.getSession().getAttribute("patient_id");
 		
+		String where = "id = " + pid;
+		ArrayList<Object> list = Patient.select(Patient.class, where);
+		Patient p = (Patient) list.get(0);
+		if (!p.isSick()) {
+			ArrayList<Health_Supporter> hss = p.getHealthSupporters();
+			if(hss.get(0) != null){
+				p.changeToSick();
+			}
+			else{
+				// redirect to add hss
+				req.getRequestDispatcher("list_of_health_supporters").forward(req, res);
+				return;
+			}
+		}	
 		String[] addDiag = req.getParameterValues("addDiag");
 		String diagDate = req.getParameter("date");
 		ResultSet rs=null;
-		String where=null;
+		where=null;
 		
 		for(int i=0;i<addDiag.length;i++)
 		{

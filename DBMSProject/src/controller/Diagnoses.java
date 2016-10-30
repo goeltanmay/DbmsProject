@@ -29,6 +29,8 @@ public class Diagnoses extends HttpServlet {
 		long pid=(long)req.getSession().getAttribute("patient_id");
 		System.out.println("Patient id is:"+pid);
 		ResultSet rs=null;
+//		get diagnosis that already exists
+//		get remaining diseases
 		
 		ArrayList<Diag> existingDiagnosis = new ArrayList<Diag>();
 		ArrayList<Diag> remainingDiagnosis = new ArrayList<Diag>();
@@ -72,12 +74,6 @@ public class Diagnoses extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
-	/*	remainingDiagnosis.add("\"Cancer\"");
-		remainingDiagnosis.add("\"Diabetes\"");
-		remainingDiagnosis.add("\"Heart Disease\"");
-		remainingDiagnosis.add("\"Flu\"");*/
 		
 		req.setAttribute("remainDiag", remainingDiagnosis);
 		

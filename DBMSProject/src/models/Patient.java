@@ -130,5 +130,49 @@ public class Patient extends BaseModel{
 			}
 		}
 	}
+	
+	public boolean isSick(){
+		String where = "pid = " + this.id;
+		ArrayList<Object> sick_patients = Sick_Patient.select(Sick_Patient.class, where);
+		if(sick_patients.size()>0) 
+			return true;
+		return false;
+	}
+	
+	public void changeToSick(){
+		String where = "pid = " + this.id;
+		ArrayList<Object> well_patients = Well_Patient.select(Well_Patient.class, where);
+		Well_Patient wp = (Well_Patient) well_patients.get(0);
+		Sick_Patient sp = new Sick_Patient();
+		sp.pid = this;
+		sp.hsid1 = wp.hsid1;
+		sp.hsid2 = wp.hsid2;
+		try {
+			sp.save();
+			wp.delete();
+		} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void changeToWell(){
+		// assuming person is already sick.
+		String where = "pid = " + this.id;
+		ArrayList<Object> sick_patients = Sick_Patient.select(Sick_Patient.class, where);
+		Sick_Patient s = (Sick_Patient) sick_patients.get(0);
+		Well_Patient wp = new Well_Patient();
+		wp.pid = this;
+		wp.hsid1 = s.hsid1;
+		wp.hsid2 = s.hsid2;
+		try {
+			wp.save();
+			s.delete();
+		} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 }

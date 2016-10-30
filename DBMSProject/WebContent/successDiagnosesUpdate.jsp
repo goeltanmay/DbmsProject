@@ -10,7 +10,7 @@
 		<center>
 			Congratulations! Your diagnoses has been successfully updated.
 			<br>
-			<form method=get action=diagnoses>
+			<form method="post" action="diagnoses">
 				 <input type=submit value="Go Back To Diagnosis Page">
 			</form>
 		</center>

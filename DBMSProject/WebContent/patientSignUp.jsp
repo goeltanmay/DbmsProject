@@ -21,7 +21,7 @@
 				        </font></td></tr>
 				  <tr><td><font size=5> Address <br><textarea rows="5" cols="20" name="address" ></textarea><br>
 				        	</font></td></tr>
-				  <tr><td><font size=5> Date Of Birth<br> <input type="date" name="dob" id="dob" size=20><br>
+				  <tr><td><font size=5> Date Of Birth<br> <input type="date" format="dd-mmm-yyyy" name="dob" id="dob" size=20><br>
 				        </font></td></tr>
 				   <tr><td><font size=5> <input type=submit value="Submit">
 				        </font></td></tr>
