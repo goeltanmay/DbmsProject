@@ -81,7 +81,7 @@
     <servlet-name>addRecords</servlet-name>
     <servlet-class>controller.AddRecords</servlet-class>
   </servlet>
-   <servlet>
+  <servlet>
     <servlet-name>profileUpdate</servlet-name>
     <servlet-class>controller.ProfileUpdate</servlet-class>
   </servlet>
@@ -175,6 +175,14 @@
   <servlet>
     <servlet-name>remove_hs</servlet-name>
     <servlet-class>controller.RemoveHealthSupporter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SetPatientHS</servlet-name>
+    <url-pattern>/set_patient</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SetPatientHS</servlet-name>
+    <servlet-class>controller.SetPatientHS</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>remove_hs</servlet-name>
