@@ -180,13 +180,29 @@
     <servlet-name>remove_hs</servlet-name>
     <url-pattern>/remove_hs</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>list_health_indicators</servlet-name>
     <servlet-class>controller.ListHealthIndicator</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>list_health_indicators</servlet-name>
     <url-pattern>/list_health_indicators</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>add_nominal_obs</servlet-name>
+    <servlet-class>controller.AddNominalObservation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>add_nominal_obs</servlet-name>
+    <url-pattern>/add_nominal_obs</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>create_nominal_observation</servlet-name>
+    <servlet-class>controller.CreateNominalObservation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>create_nominal_observation</servlet-name>
+    <url-pattern>/create_nominal_observation</url-pattern>
   </servlet-mapping>
   <listener>
     <listener-class>init.InitListener</listener-class>
