@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import models.Patient;
 import models.Users;
+import models.Well_Patient;
 
 /**
  * Servlet implementation class PatientSignUp
@@ -44,6 +45,11 @@ public class PatientSignUp extends HttpServlet {
 		
 		try {
 			p.save();
+			Well_Patient wp = new Well_Patient();
+			wp.pid = p;
+			wp.hsid1 = null;
+			wp.hsid2 = null;
+			wp.save();
 			rd=request.getRequestDispatcher("home.jsp");
 			rd.forward(request,response);
 			

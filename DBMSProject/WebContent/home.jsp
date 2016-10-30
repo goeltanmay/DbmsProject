@@ -12,11 +12,14 @@
 	    <form method=post action=profile>
 	    	<font size=5><input type="submit" action="PatientEditProfile" value="View or Edit Profile"/> </font>
 	    </form><br>
-	     <form method=post action=list_of_health_supporters>
+	     <form method=post action="list_of_health_supporters">
 	    	<font size=5><input type="submit" action="ListHealthSupporters" value="View or Edit Health Supporter"/> </font>
 	    </form><br>
-	    <form method=post action=diagnoses>
+	    <form method=post action="diagnoses">
 	    	<font size=5><input type="submit" value="View or Edit Diagnoses"/> </font>
+	    </form><br>
+	    <form method=post action="list_health_indicators">
+	    	<font size=5><input type="submit" value="View or Edit Health Indicators"/> </font>
 	    </form><br>
 	    <form method=post action=healthInd>
 	    	<font size=5><input type="submit" value="View and Add Health Observations"/> </font>
