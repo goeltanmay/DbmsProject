@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Diagnosis;
+import models.Health_Supporter;
+import models.Patient;
+import models.Sick_Patient;
 import orm.BaseModel;
 
 
@@ -58,8 +62,20 @@ public class DiagnosesRemove extends HttpServlet {
 		}
 		  
 		}
+		
+		String where="pid="+pid;
+		
 		// If all diagnosis have been removed. change this patient to well.
-		if(flag)
+		ArrayList<Object> diagnosisList=BaseModel.select(Diagnosis.class, where);
+		
+		if(diagnosisList.isEmpty())
+		{
+			Patient p=new Patient();
+			p.id=pid;
+		    p.changeToWell();
+		
+		}
+		
 		req.getRequestDispatcher("successDiagnosesUpdate.jsp").forward(req,res);;
     }
 
