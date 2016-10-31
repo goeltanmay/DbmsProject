@@ -13,7 +13,7 @@ import models.Nominal_Observation_Type;
 import models.Observation_Type;
 import models.Ordinal_Observation_Type;
 import models.Patient;
-import models.Record_NOM_OBS_Type;
+import models.Records_NOM_OBS_Type;
 import orm.BaseModel;
 
 public class GetEnteries extends HttpServlet{
