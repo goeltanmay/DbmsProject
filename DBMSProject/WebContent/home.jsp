@@ -21,8 +21,8 @@
 	    <form method=post action="list_health_indicators">
 	    	<font size=5><input type="submit" value="View or Edit Health Indicators"/> </font>
 	    </form><br>
-	    <form method=post action=healthInd>
-	    	<font size=5><input type="submit" value="View and Add Health Observations"/> </font>
+	    <form method=post action="add_ordinal_record">
+	    	<font size=5><input type="submit" value="View and Add Ordinal Records"/> </font>
 	    </form><br>
 		<form method="post" action="logOut">
 			<input type=submit value="Log Out">
