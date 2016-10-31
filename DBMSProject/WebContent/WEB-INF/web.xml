@@ -9,13 +9,21 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <servlet-name>ViewRecords</servlet-name>
-    <servlet-class>controller.ViewRecords</servlet-class>
+   <servlet>
+    <servlet-name>InsertNominalRecord</servlet-name>
+    <servlet-class>controller.InsertNominalrecord</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ViewRecords</servlet-name>
-    <url-pattern>/viewRecords</url-pattern>
+    <servlet-name>InsertNominalRecord</servlet-name>
+    <url-pattern>/addNominalRecord</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>GetEnteries</servlet-name>
+    <servlet-class>controller.GetEnteries</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetEnteries</servlet-name>
+    <url-pattern>/getEnteries</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>loginPatient</servlet-name>

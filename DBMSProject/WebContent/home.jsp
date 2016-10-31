@@ -24,8 +24,8 @@
 	    <form method=post action=healthInd>
 	    	<font size=5><input type="submit" value="View and Add Health Observations"/> </font>
 	    </form><br>
-	    <form method="post" action="viewRecords">
-	    	<font size=5><input type="submit" value="View or Edit Records"/> </font>
+	    <form method="post" action="getEnteries">
+	    	<font size=5><input type="submit" value="Add Nominal Records"/> </font>
 	    </form><br>
 		<form method="post" action="logOut">
 			<input type=submit value="Log Out">
