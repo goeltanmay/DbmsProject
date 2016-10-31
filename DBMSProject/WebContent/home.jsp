@@ -25,7 +25,7 @@
 	    	<font size=5><input type="submit" value="View and Add Ordinal Records"/> </font>
 	    </form><br>
 	    <form method="post" action="getEnteries">
-	    	<font size=5><input type="submit" value="Add Nominal Records"/> </font>
+	    	<font size=5><input type="submit" value="View and Add Nominal Records"/> </font>
 	    </form><br>
 		<form method="post" action="logOut">
 			<input type=submit value="Log Out">
