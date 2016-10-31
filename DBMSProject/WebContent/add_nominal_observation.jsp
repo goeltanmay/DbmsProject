@@ -17,9 +17,9 @@
 		</c:if>
 	</c:forEach>
 	</select>
-	<input name="values" type="text"  placeholder="CS values list">
-	<input name="expected" type="text"  placeholder="Expected">
-	<input name="freq" type="text"  placeholder="Frequency">
+	<input name="lower" type="text">
+	<input name="upper" type="text">
+	<input name="freq" type="text">
 	<input type="submit" value="Add new nominal observation">
 </form>
 </body>
