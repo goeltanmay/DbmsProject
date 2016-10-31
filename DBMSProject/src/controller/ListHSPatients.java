@@ -26,6 +26,7 @@ public class ListHSPatients extends HttpServlet {
 	Health_Supporter hs = (Health_Supporter) hsList.get(0);
 	
 	ArrayList<Patient> patientList=new ArrayList<Patient>();
+	req.getSession().setAttribute("as_hs", true);
 	
 	String where="hsid1="+user_id+"or hsid2="+user_id;
 	

@@ -40,9 +40,11 @@ public class LoginCommon extends HttpServlet {
 			ArrayList<Object> supporters = Health_Supporter.select(Health_Supporter.class, where2);
 			if(supporters!= null && supporters.size()>0){
 				req.setAttribute("is_hs", true);
+//				req.getSession().setAttribute("is_hs", true);
 			}
 			else{
 				req.setAttribute("is_hs", false);
+//				req.getSession().setAttribute("is_hs", false);
 			}
 			
 			ArrayList<Object> patients = Patient.select(Patient.class, where2);
