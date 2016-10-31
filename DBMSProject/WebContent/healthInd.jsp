@@ -56,7 +56,8 @@
 			</tbody>
 		  </table> 
      </form>
-		 
+	<a href="add_ordinal_obs"> Add new Ordinal Observation</a>
+	
 	<a href="home.jsp"> Go Back To Home Page</a>
 	</body>	
 </html>
