@@ -10,6 +10,14 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
+    <servlet-name>ViewRecords</servlet-name>
+    <servlet-class>controller.ViewRecords</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewRecords</servlet-name>
+    <url-pattern>/viewRecords</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>loginPatient</servlet-name>
     <servlet-class>controller.LoginPatient</servlet-class>
   </servlet>
