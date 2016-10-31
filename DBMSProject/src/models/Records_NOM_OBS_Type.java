@@ -2,11 +2,10 @@ package models;
 
 import orm.BaseModel;
 
-public class Record_NOM_OBS_Type extends BaseModel{
+public class Records_NOM_OBS_Type extends BaseModel{
 	public Users userid;
-	public Disease_Type did;
-	public Observation_Type oid;
-	int readings;
+	public Observation_Type noid;
+	public int readings;
 	public String recording_timestamp, observation_timestamp;
 	public Patient pid;
 	
@@ -16,17 +15,11 @@ public class Record_NOM_OBS_Type extends BaseModel{
 	public void setUserid(Users userid) {
 		this.userid = userid;
 	}
-	public Disease_Type getDid() {
-		return did;
-	}
-	public void setDid(Disease_Type did) {
-		this.did = did;
-	}
-	public Observation_Type getOid() {
-		return oid;
+	public Observation_Type getNoid() {
+		return noid;
 	}
 	public void setOid(Observation_Type oid) {
-		this.oid = oid;
+		this.noid = oid;
 	}
 	public int getReadings() {
 		return readings;
