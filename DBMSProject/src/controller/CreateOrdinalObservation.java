@@ -1,14 +1,17 @@
 package controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Observation_Type;
 import models.Ordinal_Observation_Type;
+import models.Ordinal_Observation_Values;
 import models.Patient;
 
 public class CreateOrdinalObservation extends HttpServlet{
@@ -36,7 +39,25 @@ public class CreateOrdinalObservation extends HttpServlet{
 			e.printStackTrace();
 		}
 		
+		String values = req.getParameter("values");
+		for(String value : values.split(",")){
+			Ordinal_Observation_Values val = new Ordinal_Observation_Values();
+			val.oid = ob;
+			val.value = value.trim();
+			try {
+				val.save();
+			} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
+		try {
+			req.getRequestDispatcher("list_health_indicators").forward(req, resp);
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

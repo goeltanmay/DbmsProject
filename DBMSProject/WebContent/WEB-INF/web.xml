@@ -213,12 +213,12 @@
     <url-pattern>/create_nominal_observation</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>add_ordinal_observation</servlet-name>
+    <servlet-name>add_ordinal_obs</servlet-name>
     <servlet-class>controller.AddOrdinalObservation</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>add_ordinal_observation</servlet-name>
-    <url-pattern>/add_ordinal_observation</url-pattern>
+    <servlet-name>add_ordinal_obs</servlet-name>
+    <url-pattern>/add_ordinal_obs</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>create_ordinal_observation</servlet-name>
