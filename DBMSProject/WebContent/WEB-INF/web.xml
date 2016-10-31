@@ -9,6 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <servlet-name>Alerts</servlet-name>
+    <servlet-class>controller.Alerts</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Alerts</servlet-name>
+    <url-pattern>/alerts</url-pattern>
+  </servlet-mapping>
    <servlet>
     <servlet-name>InsertNominalRecord</servlet-name>
     <servlet-class>controller.InsertNominalRecord</servlet-class>
