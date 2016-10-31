@@ -9,6 +9,7 @@
 </head>
 <body>
 <form action="add_ordinal_record_final" method="post">
+	<input type="hidden" value="${observation_type}" name="observation_type">
 	<select name="observation">
 	<c:forEach items="${values}" var="obs">
 		<c:if test="${obs != null}">
@@ -16,6 +17,7 @@
 		</c:if>
 	</c:forEach>
 	</select>
+	<input type="text" name="recording_time" placeholder="Recording Time">
 	<input type="submit" value="Next">
 </form>
 </body>

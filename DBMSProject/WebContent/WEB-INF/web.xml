@@ -253,12 +253,20 @@
     <url-pattern>/add_ordinal_record</url-pattern>
   </servlet-mapping>
   <servlet>
-  <servlet-name>add_ordinal_record_values</servlet-name>
+  	<servlet-name>add_ordinal_record_values</servlet-name>
     <servlet-class>controller.AddOrdinalRecordValues</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>add_ordinal_record_values</servlet-name>
     <url-pattern>/add_ordinal_record_values</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>add_ordinal_record_final</servlet-name>
+    <servlet-class>controller.AddOrdinalRecordFinal</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>add_ordinal_record_final</servlet-name>
+    <url-pattern>/add_ordinal_record_final</url-pattern>
   </servlet-mapping>
   <listener>
     <listener-class>init.InitListener</listener-class>
