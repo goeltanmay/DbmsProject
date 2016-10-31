@@ -2,12 +2,14 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import orm.BaseModel;
 import models.Observation_Type;
 import models.Patient;
 import models.Records_NOM_OBS_Type;
@@ -21,6 +23,11 @@ public class InsertNominalRecord extends HttpServlet{
 		// TODO Auto-generated method stub
 		Records_NOM_OBS_Type nomRecord=new Records_NOM_OBS_Type();
 
+		Records_NOM_OBS_Type nomRecordDisplay=new Records_NOM_OBS_Type();
+		String whered=""; 
+		
+		ArrayList<Object> dispList=BaseModel.select(Records_NOM_OBS_Type.class,whered);
+		
 		Users user=new Users();
 		user.id=(long)req.getSession().getAttribute("user_id");
 		Users uid=user;
