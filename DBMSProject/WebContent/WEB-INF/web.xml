@@ -244,6 +244,22 @@
     <servlet-name>create_ordinal_observation</servlet-name>
     <url-pattern>/create_ordinal_observation</url-pattern>
   </servlet-mapping>
+   <servlet>
+  <servlet-name>add_ordinal_record</servlet-name>
+    <servlet-class>controller.AddOrdinalRecord</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>add_ordinal_record</servlet-name>
+    <url-pattern>/add_ordinal_record</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  <servlet-name>add_ordinal_record_values</servlet-name>
+    <servlet-class>controller.AddOrdinalRecordValues</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>add_ordinal_record_values</servlet-name>
+    <url-pattern>/add_ordinal_record_values</url-pattern>
+  </servlet-mapping>
   <listener>
     <listener-class>init.InitListener</listener-class>
   </listener>
