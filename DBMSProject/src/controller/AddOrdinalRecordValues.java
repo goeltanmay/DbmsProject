@@ -26,6 +26,7 @@ public class AddOrdinalRecordValues extends HttpServlet {
 		String where3 = "oid = " + req.getParameter("observation");
 		ArrayList<Object> ordinal_values_list = Ordinal_Observation_Values.select(Ordinal_Observation_Values.class, where3);
 		req.setAttribute("values", ordinal_values_list);
+		req.setAttribute("observation_type",req.getParameter("observation"));
 		try {
 			req.getRequestDispatcher("add_ordinal_record_values.jsp").forward(req, resp);
 		} catch (ServletException | IOException e) {
