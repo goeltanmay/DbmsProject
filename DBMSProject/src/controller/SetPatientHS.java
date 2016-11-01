@@ -28,7 +28,7 @@ public class SetPatientHS extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		// TODO Auto-generated method stub
-		request.getSession().setAttribute("paient_id",request.getParameter("id"));
+		request.getSession().setAttribute("patient_id",request.getParameter("id"));
 		request.getRequestDispatcher("home.jsp").forward(request, response);
 		
 	}
