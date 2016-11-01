@@ -24,7 +24,7 @@
 					<td>${alert.oid.name}</td>
 					<td>${alert.details}</td>
 					<c:if test="${as_hs == true || alert.tid.id == 1}">
-						<a href="remove_alert?id=${alert.id}"> Remove!</a>
+					<td>	<a href="remove_alert?id=${alert.id}"> Remove!</a></td>
 					</c:if>
 			    </c:if>
 		    </tr>

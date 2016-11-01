@@ -24,7 +24,7 @@ public class Alerts extends HttpServlet{
 		
 		req.setAttribute("as_hs", as_hs);
 		
-		String where="pid="+pid+"and cleared=0";
+		String where="pid = "+pid+" and cleared=0";
 		
 		ArrayList<Object> obj=Alert.select(Alert.class, where);
 		

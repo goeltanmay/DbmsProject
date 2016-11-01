@@ -34,7 +34,7 @@ public class LoginCommon extends HttpServlet {
 		if(userList.size()>0){
 			HttpSession session = req.getSession();
 			session.setAttribute("user_id", ((Users)userList.get(0)).id);
-			
+			req.getSession().setAttribute("as_hs", false);
 			
 			String where2 = "user_id = " + String.valueOf(((Users)userList.get(0)).getId());
 			ArrayList<Object> supporters = Health_Supporter.select(Health_Supporter.class, where2);

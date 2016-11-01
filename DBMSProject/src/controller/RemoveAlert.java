@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,11 +15,14 @@ public class RemoveAlert extends HttpServlet{
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp){
 		long alert_id = Long.parseLong(req.getParameter("id"));
-		Alert a = new Alert();
-		a.id = alert_id;
+		String where = "id = "+ alert_id;
+		ArrayList<Object> b = Alert.select(Alert.class, where);
+		Alert c = (Alert) b.get(0);
+		c.cleared = 1;
+		
 		try {
-			a.delete();
-		} catch (NullPointerException | SQLException e) {
+			c.save();
+		} catch (NullPointerException | SQLException | IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

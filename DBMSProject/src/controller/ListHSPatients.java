@@ -28,20 +28,18 @@ public class ListHSPatients extends HttpServlet {
 	ArrayList<Patient> patientList=new ArrayList<Patient>();
 	req.getSession().setAttribute("as_hs", true);
 	
-	String where="hsid1="+user_id+"or hsid2="+user_id;
+	String where="hsid1="+user_id+" or hsid2="+user_id;
 	
 	// get the well-patient list
 	ArrayList<Object> wellList = BaseModel.select(Well_Patient.class,where);
-	for(Object obj:wellList)
-	{
+	for(Object obj:wellList) {
 		patientList.add(((Well_Patient)obj).pid);
 	}
 	
 	
 	// get the sick list.
 	ArrayList<Object> sickList = BaseModel.select(Sick_Patient.class,where);
-	for(Object obj:sickList)
-	{
+	for(Object obj:sickList) {
 		patientList.add(((Sick_Patient)obj).pid);
 	}
 	
