@@ -29,7 +29,7 @@ public class CreateNominalObservation extends HttpServlet{
 		ArrayList<Object> lists = Nominal_Observation_Type.select(Nominal_Observation_Type.class, where_nom);
 		Nominal_Observation_Type nm;
 		if(lists.size()>0){
-			nm = (Nominal_Observation_Type) list.get(0);
+			nm = (Nominal_Observation_Type) lists.get(0);
 		}
 		else 
 			nm = new Nominal_Observation_Type();
