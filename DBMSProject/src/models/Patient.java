@@ -35,7 +35,7 @@ public class Patient extends BaseModel{
 		// now that we have hsids , we can look for HSID objects.
 	}
 	
-	public void setHealthSupporter(String role, Health_Supporter hs){
+	public void setHealthSupporter(String role, Health_Supporter hs,String authDate) throws NullPointerException, IllegalArgumentException, IllegalAccessException, SQLException{
 		String where = "pid = " + this.id;
 		ArrayList<Object> sick_patients = Sick_Patient.select(Sick_Patient.class, where);
 		if(sick_patients.size()>0){
@@ -81,6 +81,14 @@ public class Patient extends BaseModel{
 				}
 			}
 		}
+		//write code for entry into health authorization
+		
+		HS_Authorization hsa=new HS_Authorization();
+		hsa.pid=this;
+		hsa.hsid=hs;
+		hsa.auth_date=authDate;
+		hsa.save();
+		
 	}
 	
 	public void remove_hs(Health_Supporter hs){
@@ -101,41 +109,44 @@ public class Patient extends BaseModel{
 					e.printStackTrace();
 				}
 			}
-			if(hs.id == s.hsid2.id){
-				s.hsid2 = null;
-				try {
-					s.save();
-				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			if(s.hsid2 != null )
+				if(hs.id == s.hsid2.id){
+					s.hsid2 = null;
+					try {
+						s.save();
+					} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-			}
 		}
 		ArrayList<Object> well_patients = Well_Patient.select(Well_Patient.class, where);
 		if(well_patients.size()>0){
 			Well_Patient s = (Well_Patient) well_patients.get(0);
-			if(hs.id == s.hsid1.id){
-				if(s.hsid2 != null){
-					s.hsid1 = s.hsid2;
+			if(s.hsid1 != null)
+				if(hs.id == s.hsid1.id){
+					if(s.hsid2 != null){
+						s.hsid1 = s.hsid2;
+						s.hsid2 = null;
+					}
+					else s.hsid1= null;
+					try {
+						s.save();
+					} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			if(s.hsid2 != null)
+				if(hs.id == s.hsid2.id){
 					s.hsid2 = null;
+					try {
+						s.save();
+					} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				else s.hsid1= null;
-				try {
-					s.save();
-				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if(hs.id == s.hsid2.id){
-				s.hsid2 = null;
-				try {
-					s.save();
-				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 		}
 	}
 	

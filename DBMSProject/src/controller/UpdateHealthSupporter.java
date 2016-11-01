@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -24,7 +25,14 @@ public class UpdateHealthSupporter extends HttpServlet{
 		where = "id = " + hs_id;
 		ArrayList<Object> hss_list = Health_Supporter.select(Health_Supporter.class, where);
 		Health_Supporter hs = (Health_Supporter) hss_list.get(0);
-		p.setHealthSupporter(role, hs);
+		String authDate=req.getParameter("date");
+		try {
+			p.setHealthSupporter(role, hs,authDate);
+		} catch (NullPointerException | IllegalArgumentException
+				| IllegalAccessException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			req.getRequestDispatcher("/list_of_health_supporters").forward(req, resp);
 		} catch (ServletException | IOException e) {

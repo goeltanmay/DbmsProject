@@ -39,6 +39,7 @@
 			<option value="${hs.id}">${hs.user_id.name }</option>
 		</c:forEach>
 	</select>
+	<input type="text" name="date" placeholder="authDate"></input>
 	<input type="submit" value="Add new HS">
 </form>
 </body>
