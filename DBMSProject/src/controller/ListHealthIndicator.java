@@ -31,7 +31,17 @@ public class ListHealthIndicator extends HttpServlet{
 			ArrayList<Object> nominals_disease = Observation_Type.getNominalObservationTypeForDisease(d);
 			for(Object n : nominals_disease){
 				if(n != null){
-					if(!nominals.contains((Nominal_Observation_Type)n)) nominals.add(n);
+//					if(!nominals.contains((Nominal_Observation_Type)n)) nominals.add(n);
+					boolean added=false;
+					for(Object nom : nominals){
+						if(((Nominal_Observation_Type)nom).oid.id == ((Nominal_Observation_Type)n).oid.id){
+							added=true;
+							break;
+						}
+					}
+					if(!added){
+						nominals.add(n);
+					}
 				}
 			}
 			
@@ -46,8 +56,18 @@ public class ListHealthIndicator extends HttpServlet{
 		ArrayList<Object> general_nominals = Observation_Type.getNominalObservationTypeForAll();
 		for(Object o: general_nominals){
 			if(o !=null){
-				if(!nominals.contains((Nominal_Observation_Type)o)){
-					nominals.add((Nominal_Observation_Type)o);
+//				if(!nominals.contains((Nominal_Observation_Type)o)){
+//					nominals.add((Nominal_Observation_Type)o);
+//				}
+				boolean added=false;
+				for(Object nom : nominals){
+					if(((Nominal_Observation_Type)nom).oid.id == ((Nominal_Observation_Type)o).oid.id){
+						added=true;
+						break;
+					}
+				}
+				if(!added){
+					nominals.add(o);
 				}
 			}
 		}

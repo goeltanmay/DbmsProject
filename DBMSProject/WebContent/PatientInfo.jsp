@@ -11,16 +11,17 @@
 
     <font size=7 color="red"> Patient Details: </font>
 <br>
-here
  <table style="width:40%">
 			<thead>
 				<tr><th align="left"><font size=5 color=red>List of Patients</font> </th>
 				</tr>
 			</thead>
 			<tbody>
+			
 			<c:forEach var="patient" items="${patients}" >
-				<a href="set_patient?id=${patient.id}">${patient.id}</a> 
+				<tr><td><a href="set_patient?id=${patient.id}">${patient.id}</a> </td></tr>
 			</c:forEach>
+			
 			</tbody>
  </table>    
 
