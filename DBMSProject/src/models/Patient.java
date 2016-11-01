@@ -89,7 +89,11 @@ public class Patient extends BaseModel{
 		if(sick_patients.size()>0){
 			Sick_Patient s = (Sick_Patient) sick_patients.get(0);
 			if(hs.id == s.hsid1.id){
-				s.hsid1= null;
+				if(s.hsid2 != null){
+					s.hsid1 = s.hsid2;
+					s.hsid2 = null;
+				}
+				else s.hsid1= null;
 				try {
 					s.save();
 				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
@@ -111,7 +115,11 @@ public class Patient extends BaseModel{
 		if(well_patients.size()>0){
 			Well_Patient s = (Well_Patient) well_patients.get(0);
 			if(hs.id == s.hsid1.id){
-				s.hsid1= null;
+				if(s.hsid2 != null){
+					s.hsid1 = s.hsid2;
+					s.hsid2 = null;
+				}
+				else s.hsid1= null;
 				try {
 					s.save();
 				} catch (NullPointerException | IllegalArgumentException | IllegalAccessException | SQLException e) {
