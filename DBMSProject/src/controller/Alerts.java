@@ -19,7 +19,7 @@ public class Alerts extends HttpServlet{
 		// TODO Auto-generated method stub
 		ArrayList<Alert> alertList=new ArrayList<Alert>();
 		
-		long pid=Long.parseLong((String)req.getSession().getAttribute("patient_id"));
+		long pid=Long.parseLong(req.getSession().getAttribute("patient_id").toString());
 		boolean as_hs = (boolean) req.getSession().getAttribute("as_hs");
 		
 		req.setAttribute("as_hs", as_hs);
