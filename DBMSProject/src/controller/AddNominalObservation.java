@@ -14,7 +14,7 @@ import models.Patient;
 public class AddNominalObservation extends HttpServlet{
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp){
-		long patient_id = (long) req.getSession().getAttribute("patient_id");
+		long patient_id = Long.parseLong((String)req.getSession().getAttribute("patient_id"));
 		String where = "id = " + patient_id;
 		ArrayList<Object> list = Patient.select(Patient.class, where);
 		Patient p = (Patient) list.get(0);

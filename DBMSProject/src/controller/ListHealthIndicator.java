@@ -18,7 +18,7 @@ public class ListHealthIndicator extends HttpServlet{
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp){
 		
-		long patient_id = (long) req.getSession().getAttribute("patient_id");
+		long patient_id = Long.parseLong((String) req.getSession().getAttribute("patient_id"));
 		String where = "id = " + patient_id;
 		ArrayList<Object> list = Patient.select(Patient.class, where);
 		Patient p = (Patient) list.get(0);
@@ -82,7 +82,7 @@ public class ListHealthIndicator extends HttpServlet{
 		}
 		
 		req.setAttribute("nominals", nominals);
-		req.setAttribute("ordinals", ordinals);
+5			req.setAttribute("ordinals", ordinals);
 		
 		try {
 			req.getRequestDispatcher("healthInd.jsp").forward(req, resp);
