@@ -25,7 +25,14 @@ public class CreateNominalObservation extends HttpServlet{
 		String where2 = "id =" + obs_id;
 		list = Observation_Type.select(Observation_Type.class, where2);
 		Observation_Type obs = (Observation_Type) list.get(0);
-		Nominal_Observation_Type nm = new Nominal_Observation_Type();
+		String where_nom = "pid = " + p.id + " and oid = "+ obs.id;
+		ArrayList<Object> lists = Nominal_Observation_Type.select(Nominal_Observation_Type.class, where_nom);
+		Nominal_Observation_Type nm;
+		if(lists.size()>0){
+			nm = (Nominal_Observation_Type) list.get(0);
+		}
+		else 
+			nm = new Nominal_Observation_Type();
 		nm.pid = p;
 		nm.oid = obs;
 		nm.lower_limit = Integer.parseInt(req.getParameter("lower"));
