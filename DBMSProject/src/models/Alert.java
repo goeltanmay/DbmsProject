@@ -7,7 +7,7 @@ public class Alert extends BaseModel{
 	public Observation_Type oid;
 	public Alert_Type tid;
 	public String details;
-	int cleared;
+	public int cleared;
 	public Patient getPid() {
 		return pid;
 	}

@@ -276,6 +276,14 @@
     <servlet-name>add_ordinal_record_final</servlet-name>
     <url-pattern>/add_ordinal_record_final</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>remove_alert</servlet-name>
+    <servlet-class>controller.RemoveAlert</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>remove_alert</servlet-name>
+    <url-pattern>/remove_alert</url-pattern>
+  </servlet-mapping>
   <listener>
     <listener-class>init.InitListener</listener-class>
   </listener>

@@ -23,9 +23,9 @@
 					<option value="${obs.id}">${obs.name}</option>
 					<td>${alert.oid.name}</td>
 					<td>${alert.details}</td>
-					<form action="" method="post">
-					<td><input type="submit" name="Clear Alert" value="${alert.id}"></td>
-					</form>
+					<c:if test="${as_hs == true || alert.tid.id == 1}">
+					<td>	<a href="remove_alert?id=${alert.id}"> Remove!</a></td>
+					</c:if>
 			    </c:if>
 		    </tr>
 		</c:forEach>
