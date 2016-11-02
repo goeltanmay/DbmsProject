@@ -1,0 +1,19 @@
+ 1. List the number of health supporters that were authorized in the month of September 2016 by patients suffering from heart disease.
+
+	select count(*) from HS_AUTHORIZATION where AUTH_DATE >= '01-Sep-16' and AUTH_DATE <= '30-Sep-16' and PID IN (select pid from DIAGNOSIS where did = (select id from DISEASE_TYPE where disease_name='Heart Disease')); 
+
+ 2. Give the number of patients who were not complying with the recommended frequency of recording observations.
+
+   select count(distinct(pid)) as numb_of_patients from alert where tid=2 ;
+
+ 3. List the health supporters who themselves are patients.
+ 
+	select * from users where id in (select user_id from patient where user_id in (select user_id from HEALTH_SUPPORTER));
+ 
+ 4. List the patients who are not ‘sick’.
+	select * from users where id in (select user_id from patient where user_id not in (select pid from sick_patient));
+
+ 5. How many patients have different observation time and recording time (of the observation).
+	select (select count(Distinct(PID)) from RECORDS_NOM_OBS_TYPE where RECORDING_TIMESTAMP <> OBSERVATION_TIMESTAMP) +
+(select count(Distinct(PID)) from RECORDS_ORD_OBS_TYPE where RECORDING_TIMESTAMP <> OBSERVATION_TIMESTAMP) as total_num_Of_Patients from dual;
+ 

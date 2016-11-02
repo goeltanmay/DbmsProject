@@ -327,10 +327,25 @@ BEGIN
   INTO :new.ID
   FROM dual;
 END;
+
+############################################################################################
+ORDINAL_OBSERVATION_VALUES
+
+CREATE SEQUENCE Ord_Obs_Val_Id_Seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER Ord_Obs_Val_Trig
+  BEFORE INSERT ON ORDINAL_OBSERVATION_VALUES
+  FOR EACH ROW
+BEGIN
+  SELECT Ord_Obs_Val_Id_Seq.nextval
+  INTO :new.ID
+  FROM dual;
+END;
+
 ##############################################################################################
 Outside the limit alert:
 
-CREATE OR REPLACE Procedure Alert_Outside_Proc
+CREATE OR REPLACE Procedure Nom_Alert_Outside_Proc
    ( noid_in IN number, pid_in IN number )
 
 IS
@@ -364,17 +379,19 @@ END;
 
 drop procedure Alert_Outside_Proc;
 ####################################################################################################################
-Low Activity Alerts
+Nominal Low Activity Alerts
 
-create or replace Procedure Alert_Low_Activity
-   (pid_in IN number)
+create or replace Procedure Nom_Alert_Low_Activity
+   (pid_in IN number, dates_in IN DATE)
 
 IS
+  start_date DATE := TO_DATE(dates_in, 'dd-Mon-yy');
+  
    cursor c1 is
 	select N1.OID from NOMINAL_OBSERVATION_TYPE N1 where N1.ID IN (select A.NOID from(select R.RECORDING_TIMESTAMP, R.NOID, N.Frequency, ROW_NUMBER() over 
 (partition by R.NOID order by R.RECORDING_TIMESTAMP desc) as rownumber 
 from RECORDS_NOM_OBS_TYPE R, NOMINAL_OBSERVATION_TYPE N where R.NOID=N.ID and R.PID=pid_in) A where A.rownumber=1 and 
-(A.RECORDING_TIMESTAMP ) < (SYSDATE - A.Frequency) group by A.NOID);
+(A.RECORDING_TIMESTAMP ) < (start_date - A.Frequency) group by A.NOID);
 
 BEGIN   
    FOR records in c1 LOOP
@@ -383,9 +400,53 @@ BEGIN
    commit;
    
 END;
+
 drop procedure Alert_Low_Activity;
 #################################################################################################################### 
+Ordinal outside alert
+create or replace Procedure Ord_Alert_Outside_Proc
+   ( oid_in IN number, pid_in IN number )
 
+IS
+   ObsId number;
+   
+   cursor c1 is
+	select Distinct A.OID from(select R.Readings, R.OOID, O.OID, O.Expected, ROW_NUMBER() OVER (ORDER BY R.RECORDING_TIMESTAMP desc) as rownumber 
+from RECORDS_ORD_OBS_TYPE R, ORDINAL_OBSERVATION_TYPE O where R.OOID=O.ID and R.OOID=oid_in and R.PID=pid_in) A 
+where A.rownumber < 5 and A.Readings <> A.Expected;
+
+BEGIN
+   open c1;
+   fetch c1 into ObsId;
+   IF ObsId IS NOT NULL then
+	insert into ALERT(PID, OID, TID, Details) values(pid_in, ObsId, 1,'Not expected Reading');
+   END IF;
+	
+END;
+
+######################################################################################################################
+Ordinal Low Activity
+
+create or replace Procedure Ord_Low_Activity
+   (pid_in IN number, dates_in IN DATE)
+
+IS
+  start_date DATE := TO_DATE(dates_in, 'dd-Mon-yy');
+
+   cursor c1 is
+	select O1.OID from ORDINAL_OBSERVATION_TYPE O1 where O1.ID IN (select A.OOID from(select R.RECORDING_TIMESTAMP, R.OOID, O.Frequency, ROW_NUMBER() over 
+(partition by R.OOID order by R.RECORDING_TIMESTAMP desc) as rownumber 
+from RECORDS_ORD_OBS_TYPE R, ORDINAL_OBSERVATION_TYPE O where R.OOID=O.ID and R.PID=pid_in) A where A.rownumber=1 and 
+(A.RECORDING_TIMESTAMP ) < (start_date - A.Frequency) group by A.OOID);
+
+BEGIN   
+   FOR records in c1 LOOP
+    insert into ALERT(PID, OID, TID, Details) values(pid_in, records.OID, 2,'Low Activity');
+   END LOOP;
+   commit;
+   
+END;
+######################################################################################################################
 select N1.OID from NOMINAL_OBSERVATION_TYPE N1 where N1.ID = (select NOID from(select R.Readings, R.NOID, N.Upper_Limit, ROW_NUMBER() over 
 (partition by R.NOID order by R.RECORDING_TIMESTAMP desc) as rownumber 
 from RECORDS_NOM_OBS_TYPE R, NOMINAL_OBSERVATION_TYPE N where R.NOID=N.ID and R.USERID=1) A where A.rownumber < 5 and A.Readings > A.Upper_limit 4
